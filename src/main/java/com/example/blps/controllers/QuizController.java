@@ -3,6 +3,7 @@ package com.example.blps.controllers;
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
 import com.example.blps.model.QuestionDTO;
+import com.example.blps.model.TestAnswersDTO;
 import com.example.blps.model.WriteCommentDTO;
 import com.example.blps.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,27 @@ public class QuizController {
     }
 
     @PostMapping
-    public ResponseEntity<?> submitTest() {
+    public ResponseEntity<?> submitTest(@RequestBody TestAnswersDTO testAnswersDTO) {
         Map<Object, Object> model = new HashMap<>();
+        try {
+            Double rate = quizService.submitTest(testAnswersDTO);
+            model.put("rate", rate);
+        } catch (NoSuchTestException | InvalidDataException e) {
+            model.put("message", e.getMessage());
+            return new ResponseEntity<>(model, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(model, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getQuestionsCount(@RequestParam("test") Long testId) {
+        Map<Object, Object> model = new HashMap<>();
+        try {
+            quizService.getTestQuestionsCount(testId);
+        } catch (NoSuchTestException e) {
+            model.put("message", e.getMessage());
+            return new ResponseEntity<>(model, HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
