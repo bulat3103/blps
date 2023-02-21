@@ -1,5 +1,6 @@
 package com.example.blps.model;
 
+import com.example.blps.model.dto.TestCommentsDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

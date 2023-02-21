@@ -1,7 +1,7 @@
 package com.example.blps.repositories;
 
 import com.example.blps.model.TestQuestion;
-import com.example.blps.model.TestQuestionId;
+import com.example.blps.model.ids.TestQuestionId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

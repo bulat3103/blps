@@ -1,4 +1,4 @@
-package com.example.blps.model;
+package com.example.blps.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

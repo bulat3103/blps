@@ -1,14 +1,17 @@
-package com.example.blps.model;
+package com.example.blps.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WriteCommentDTO {
-    private Long testId;
+public class TestCommentsDTO {
+    private Long id;
+    private Timestamp writeDate;
     private String writer;
     private String comment;
 }

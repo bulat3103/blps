@@ -1,6 +1,6 @@
 package com.example.blps.model;
 
-import com.example.blps.model.ids.TestQuestionId;
+import com.example.blps.model.ids.AnswerId;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -10,17 +10,17 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "test_question")
+@Table(name = "answer")
 @NoArgsConstructor
-public class TestQuestion {
+public class Answer {
     @EmbeddedId
-    private TestQuestionId id;
+    private AnswerId id;
 
-    @Column(name = "number")
-    private Integer number;
+    @Column(name = "rate")
+    private Integer rate;
 
-    public TestQuestion(TestQuestionId id, Integer number) {
+    public Answer(AnswerId id, Integer rate) {
         this.id = id;
-        this.number = number;
+        this.rate = rate;
     }
 }

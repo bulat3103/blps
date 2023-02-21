@@ -1,5 +1,7 @@
-package com.example.blps.model;
+package com.example.blps.model.ids;
 
+import com.example.blps.model.Question;
+import com.example.blps.model.Test;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

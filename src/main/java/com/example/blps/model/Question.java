@@ -1,5 +1,6 @@
 package com.example.blps.model;
 
+import com.example.blps.model.dto.QuestionDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,9 +19,6 @@ public class Question {
 
     @Column(name = "answers")
     private String answers;
-
-    @Column(name = "right_answer")
-    private String right_answer;
 
     public static QuestionDTO toDto(Question question) {
         return new QuestionDTO(question.text, question.answers);

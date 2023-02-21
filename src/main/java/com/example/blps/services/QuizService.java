@@ -3,10 +3,11 @@ package com.example.blps.services;
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
 import com.example.blps.model.*;
-import com.example.blps.repositories.CommentRepository;
-import com.example.blps.repositories.QuestionRepository;
-import com.example.blps.repositories.TestQuestionRepository;
-import com.example.blps.repositories.TestRepository;
+import com.example.blps.model.dto.QuestionDTO;
+import com.example.blps.model.dto.TestAnswersDTO;
+import com.example.blps.model.dto.TestCommentsDTO;
+import com.example.blps.model.dto.WriteCommentDTO;
+import com.example.blps.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -19,12 +20,23 @@ public class QuizService {
     private final TestQuestionRepository testQuestionRepository;
     private final QuestionRepository questionRepository;
     private final CommentRepository commentRepository;
+    private final AnswerRepository answerRepository;
+    private final TestResultRepository testResultRepository;
 
-    public QuizService(TestRepository testRepository, TestQuestionRepository testQuestionRepository, QuestionRepository questionRepository, CommentRepository commentRepository) {
+    public QuizService(
+            TestRepository testRepository,
+            TestQuestionRepository testQuestionRepository,
+            QuestionRepository questionRepository,
+            CommentRepository commentRepository,
+            AnswerRepository answerRepository,
+            TestResultRepository testResultRepository)
+    {
         this.testRepository = testRepository;
         this.testQuestionRepository = testQuestionRepository;
         this.questionRepository = questionRepository;
         this.commentRepository = commentRepository;
+        this.answerRepository = answerRepository;
+        this.testResultRepository = testResultRepository;
     }
 
     public List<TestCommentsDTO> getAllTestComments(Long testId) throws NoSuchTestException {
@@ -69,33 +81,22 @@ public class QuizService {
         return comment.getId();
     }
 
-    public Double submitTest(TestAnswersDTO testAnswersDTO) throws NoSuchTestException, InvalidDataException {
+    public String submitTest(TestAnswersDTO testAnswersDTO) throws NoSuchTestException, InvalidDataException {
         Optional<Test> oTest = testRepository.findById(testAnswersDTO.getTestId());
         if (oTest.isEmpty()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         Integer count = testQuestionRepository.countByTestId(testAnswersDTO.getTestId());
-        Map<Integer, List<Integer>> answers = testAnswersDTO.getAnswers();
-        int trueAns = 0;
-        for (Map.Entry<Integer, List<Integer>> entry : answers.entrySet()) {
+        Map<Integer, Integer> answers = testAnswersDTO.getAnswers();
+        int testRate = 0;
+        for (Map.Entry<Integer, Integer> entry : answers.entrySet()) {
             if (entry.getKey() > count || entry.getKey() <= 0) {
                 throw new InvalidDataException("Вопроса под таким номером не существует");
             }
             Long qId = testQuestionRepository.getByTestIdAndNumber(testAnswersDTO.getTestId(), entry.getKey());
-            String[] rightAnswers = questionRepository.getById(qId).getRight_answer().split(",");
-            Set<String> set = new HashSet<>(Arrays.asList(rightAnswers));
-            if (rightAnswers.length == entry.getValue().size()) {
-                boolean check = true;
-                for (Integer ans : entry.getValue()) {
-                    if (!set.contains(String.valueOf(ans))) {
-                        check = false;
-                        break;
-                    }
-                }
-                trueAns = check ? trueAns + 1 : trueAns;
-            }
+            testRate += answerRepository.getRateByQuestionAndAnsNum(qId, entry.getValue());
         }
-        return trueAns * 1.0 / count;
+        return testResultRepository.getDescByTestAndBounds(testAnswersDTO.getTestId(), testRate);
     }
 
     public Integer getTestQuestionsCount(Long testId) throws NoSuchTestException {

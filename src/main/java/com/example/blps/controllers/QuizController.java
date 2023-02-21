@@ -2,9 +2,9 @@ package com.example.blps.controllers;
 
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
-import com.example.blps.model.QuestionDTO;
-import com.example.blps.model.TestAnswersDTO;
-import com.example.blps.model.WriteCommentDTO;
+import com.example.blps.model.dto.QuestionDTO;
+import com.example.blps.model.dto.TestAnswersDTO;
+import com.example.blps.model.dto.WriteCommentDTO;
 import com.example.blps.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,8 +51,8 @@ public class QuizController {
     public ResponseEntity<?> submitTest(@RequestBody TestAnswersDTO testAnswersDTO) {
         Map<Object, Object> model = new HashMap<>();
         try {
-            Double rate = quizService.submitTest(testAnswersDTO);
-            model.put("rate", rate);
+            String result = quizService.submitTest(testAnswersDTO);
+            model.put("result", result);
         } catch (NoSuchTestException | InvalidDataException e) {
             model.put("message", e.getMessage());
             return new ResponseEntity<>(model, HttpStatus.BAD_REQUEST);
