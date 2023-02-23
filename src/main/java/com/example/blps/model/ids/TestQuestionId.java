@@ -33,7 +33,8 @@ public class TestQuestionId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TestQuestionId that)) return false;
+        if (!(o instanceof TestQuestionId)) return false;
+        TestQuestionId that = (TestQuestionId) o;
         return Objects.equals(getTestId(), that.getTestId()) && Objects.equals(qId, that.qId);
     }
 

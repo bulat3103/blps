@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+  title: Quiz Application - OpenAPI 3.0
+  version: 0.0.1-SNAPSHOT 
+tags:
+  - name: quiz
+    description: APIs for tests
+paths:
+  /quiz:
+    get:
+      tags:
+        - quiz
+      summary: Get the number of questions in the test
+      description: Get the number of questions in the test by id
+      operationId: getQuestionsCount
+      parameters:
+        - name: testId
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: "number"
+                    format: "int64"
+        '400':
+          description: Test is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - quiz
+      summary: Submit test
+      description: Submit all answers for the test and get result
+      operationId: submitTest
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestAnswersDTO'
+      responses:
+        '200':
+          description: Result for the test
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: "string"
+        '400':
+          description: Test or question are not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /quiz/comment:
+    get:
+      tags:
+        - quiz
+      summary: Get the list of comments for the test
+      description: Get the list of comments for the test by id
+      operationId: getTestComments
+      parameters:
+        - name: testId
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestComment'
+        '400':
+          description: Test is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - quiz
+      summary: Post comment for the test
+      operationId: "writeComment"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WriteCommentDTO'
+      responses:
+        '200':
+          description: Successful uploading the comment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "number"
+                    format: "int64"
+        '400':
+          description: Test is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /quiz/question:
+    get:
+      tags:
+        - quiz
+      summary: Get next question for the test
+      description: Get question by testId and number of question
+      operationId: getQuestion
+      parameters:
+        - name: testId
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+        - name: qNumber
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int32"
+      responses:
+        '200':
+          description: Successful uploading the comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionDTO'
+        '400':
+          description: Test or question are not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /quiz/rate:
+    post:
+      tags:
+        - quiz
+      summary: Rate test
+      operationId: rateTest
+      parameters:
+        - name: testId
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+        - name: rate
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int32"
+      responses:
+        '200':
+          description: Successful uploading the rate
+        '400':
+          description: Test is not found or invalid rate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    QuestionDTO:
+      type: object
+      properties:
+        text:
+          type: "string"
+          nullable: false
+        answers:
+          type: "string"
+          nullable: false
+    Error:
+      type: object
+      properties:
+        message:
+         type: "string"
+    WriteCommentDTO:
+      type: object
+      properties:
+        testId:
+          type: "number"
+          format: "int64"
+          nullable: false
+        writer:
+          type: "string"
+          nullable: true
+        comment:
+          type: "string"
+          nullable: false
+    TestComment:
+      type: object
+      properties:
+        id:
+          type: "number"
+          format: "int64"
+          nullable: false
+        writeDate:
+          type: "string"
+          format: "date-time"
+          nullable: false
+        writer:
+          type: "string"
+          nullable: false
+        comment:
+          type: "string"
+          nullable: false
+    TestAnswersDTO:
+      type: object
+      properties:
+        testId:
+          type: "number"
+          format: "int64"
+          nullable: false
+        answers:
+          $ref: '#/components/schemas/TestAnswer'
+    TestAnswer:
+      type: object
+      properties:
+        questionId:
+          type: "number"
+          format: "int64"
+          nullable: false
+        answer:
+          type: integer
+          nullable: false
+      example:
+        1: 1
+        2: 2

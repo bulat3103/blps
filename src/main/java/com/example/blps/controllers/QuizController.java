@@ -61,10 +61,11 @@ public class QuizController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getQuestionsCount(@RequestParam("test") Long testId) {
+    public ResponseEntity<?> getQuestionsCount(@RequestParam("testId") Long testId) {
         Map<Object, Object> model = new HashMap<>();
         try {
-            quizService.getTestQuestionsCount(testId);
+            int count = quizService.getTestQuestionsCount(testId);
+            model.put("count", count);
         } catch (NoSuchTestException e) {
             model.put("message", e.getMessage());
             return new ResponseEntity<>(model, HttpStatus.BAD_REQUEST);
