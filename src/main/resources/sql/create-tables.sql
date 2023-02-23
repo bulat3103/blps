@@ -9,8 +9,7 @@ create table tests
 create table questions
 (
     id bigint primary key not null,
-    text text not null,
-    answers text not null
+    text text not null
 );
 
 create table test_question
@@ -25,6 +24,7 @@ create table answer
 (
     q_id bigint not null references questions(id),
     ans_num int not null,
+    text text not null,
     rate int not null,
     primary key (q_id, ans_num)
 );

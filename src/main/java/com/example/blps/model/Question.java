@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "questions")
@@ -17,10 +19,7 @@ public class Question {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "answers")
-    private String answers;
-
-    public static QuestionDTO toDto(Question question) {
-        return new QuestionDTO(question.text, question.answers);
+    public static QuestionDTO toDto(Question question, List<String> answers) {
+        return new QuestionDTO(question.text, answers);
     }
 }

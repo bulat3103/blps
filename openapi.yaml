@@ -190,8 +190,9 @@ components:
           type: "string"
           nullable: false
         answers:
-          type: "string"
-          nullable: false
+          type: "array"
+          items:
+            type: "string"
     Error:
       type: object
       properties:

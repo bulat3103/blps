@@ -68,7 +68,8 @@ public class QuizService {
         Integer count = testQuestionRepository.countByTestId(testId);
         if (qNumber <= 0 || qNumber > count) throw new InvalidDataException("Вопроса под таким номером не существует");
         Long qId = testQuestionRepository.getByTestIdAndNumber(testId, qNumber);
-        return Question.toDto(questionRepository.findById(qId).get());
+        List<String> answers = answerRepository.getAnswersByQuestionId(qId);
+        return Question.toDto(questionRepository.findById(qId).get(), answers);
     }
 
     public Long writeComment(WriteCommentDTO writeCommentDTO) throws NoSuchTestException {

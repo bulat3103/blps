@@ -16,11 +16,15 @@ public class Answer {
     @EmbeddedId
     private AnswerId id;
 
+    @Column(name = "text")
+    private String text;
+
     @Column(name = "rate")
     private Integer rate;
 
-    public Answer(AnswerId id, Integer rate) {
+    public Answer(AnswerId id, String text, Integer rate) {
         this.id = id;
+        this.text = text;
         this.rate = rate;
     }
 }
