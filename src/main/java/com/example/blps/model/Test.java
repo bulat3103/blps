@@ -1,10 +1,7 @@
 package com.example.blps.model;
 
 import com.example.blps.model.dto.TestDTO;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -12,6 +9,8 @@ import lombok.Data;
 @Table(name = "tests")
 public class Test {
     @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")

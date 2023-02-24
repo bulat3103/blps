@@ -13,6 +13,6 @@ public interface TestQuestionRepository extends JpaRepository<TestQuestion, Test
     @Query(value = "select q_id from test_question where test_id = :testId and number = :qNumber", nativeQuery = true)
     Long getByTestIdAndNumber(@Param("testId") Long testId, @Param("qNumber") Integer qNumber);
 
-    @Query(value = "select count() from test_question where test_id = :testId", nativeQuery = true)
+    @Query(value = "select count(*) from test_question where test_id = :testId", nativeQuery = true)
     Integer countByTestId(@Param("testId") Long testId);
 }

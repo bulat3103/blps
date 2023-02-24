@@ -1,10 +1,7 @@
 package com.example.blps.model;
 
 import com.example.blps.model.dto.QuestionDTO;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -14,6 +11,8 @@ import java.util.List;
 @Table(name = "questions")
 public class Question {
     @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "text")

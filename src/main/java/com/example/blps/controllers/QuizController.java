@@ -22,7 +22,7 @@ public class QuizController {
     private QuizService quizService;
 
     @GetMapping(value = "question")
-    public ResponseEntity<?> getQuestion(@RequestParam("test") Long testId, @RequestParam("q") Integer qNumber) {
+    public ResponseEntity<?> getQuestion(@RequestParam("testId") Long testId, @RequestParam("q") Integer qNumber) {
         Map<Object, Object> model = new HashMap<>();
         try {
             QuestionDTO question = quizService.getQuestion(testId, qNumber);
@@ -81,7 +81,7 @@ public class QuizController {
     }
 
     @PostMapping("rate")
-    public ResponseEntity<?> rateTest(@RequestParam("test") Long testId, @RequestParam("rate") Integer rate) {
+    public ResponseEntity<?> rateTest(@RequestParam("testId") Long testId, @RequestParam("rate") Integer rate) {
         Map<Object, Object> model = new HashMap<>();
         try {
             quizService.rateTest(testId, rate);
@@ -93,7 +93,7 @@ public class QuizController {
     }
 
     @GetMapping(value = "comment")
-    public ResponseEntity<?> getTestComments(@RequestParam("test") Long testId) {
+    public ResponseEntity<?> getTestComments(@RequestParam("testId") Long testId) {
         Map<Object, Object> model = new HashMap<>();
         try {
             model.put("comments", quizService.getAllTestComments(testId));
