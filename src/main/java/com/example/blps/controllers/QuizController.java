@@ -60,6 +60,13 @@ public class QuizController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
+    @GetMapping(value = "tests")
+    public ResponseEntity<?> getListOfTests() {
+        Map<Object, Object> model = new HashMap<>();
+        model.put("tests", quizService.getAllTests());
+        return new ResponseEntity<>(model, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<?> getQuestionsCount(@RequestParam("testId") Long testId) {
         Map<Object, Object> model = new HashMap<>();

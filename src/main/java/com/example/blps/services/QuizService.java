@@ -3,10 +3,7 @@ package com.example.blps.services;
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
 import com.example.blps.model.*;
-import com.example.blps.model.dto.QuestionDTO;
-import com.example.blps.model.dto.TestAnswersDTO;
-import com.example.blps.model.dto.TestCommentsDTO;
-import com.example.blps.model.dto.WriteCommentDTO;
+import com.example.blps.model.dto.*;
 import com.example.blps.repositories.*;
 import org.springframework.stereotype.Service;
 
@@ -106,5 +103,9 @@ public class QuizService {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         return testQuestionRepository.countByTestId(testId);
+    }
+
+    public List<TestDTO> getAllTests() {
+        return testRepository.findAll().stream().map(Test::toDto).toList();
     }
 }

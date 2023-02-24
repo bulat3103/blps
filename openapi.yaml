@@ -181,8 +181,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /quiz/tests:
+    get:
+      tags:
+        - quiz
+      summary: List of all tests
+      operationId: getListOfTests
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/TestDTO'
 components:
   schemas:
+    TestDTO:
+      type: object
+      properties:
+        id:
+          type: "number"
+          format: "int64"
+          nullable: false
+        name:
+          type: "string"
+          nullable: false
+        rate:
+          type: "number"
+          format: "double"
+          nullable: false
     QuestionDTO:
       type: object
       properties:
