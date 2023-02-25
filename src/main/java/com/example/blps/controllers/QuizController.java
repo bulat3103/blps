@@ -112,4 +112,5 @@ public class QuizController {
         }
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
+
 }
