@@ -33,4 +33,10 @@ public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
                 .body(exception.getMessage());
     }
 
+    @ExceptionHandler(NumberFormatException.class)
+    protected ResponseEntity<Object> NumberFormat(NumberFormatException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Рейтинг должен быть числом [0;5]");
+    }
 }
