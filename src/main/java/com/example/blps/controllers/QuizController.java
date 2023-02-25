@@ -21,8 +21,8 @@ public class QuizController {
     @Autowired
     private QuizService quizService;
 
-    @GetMapping(value = "question")
-    public ResponseEntity<?> getQuestion(@RequestParam("testId") Long testId, @RequestParam("q") Integer qNumber) {
+    @GetMapping(value = "{testId}/question")
+    public ResponseEntity<?> getQuestion(@PathVariable Long testId, @RequestParam("q") Integer qNumber) {
         Map<Object, Object> model = new HashMap<>();
         try {
             QuestionDTO question = quizService.getQuestion(testId, qNumber);
@@ -34,11 +34,11 @@ public class QuizController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @PostMapping(value = "comment")
-    public ResponseEntity<?> writeComment(@RequestBody WriteCommentDTO writeCommentDTO) {
+    @PostMapping(value = "{testId}/comments")
+    public ResponseEntity<?> writeComment(@PathVariable Long testId,@RequestBody WriteCommentDTO writeCommentDTO) {
         Map<Object, Object> model = new HashMap<>();
         try {
-            Long id = quizService.writeComment(writeCommentDTO);
+            Long id = quizService.writeComment(testId, writeCommentDTO);
             model.put("id", id);
         } catch (NoSuchTestException e) {
             model.put("message", e.getMessage());
@@ -60,15 +60,15 @@ public class QuizController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @GetMapping(value = "tests")
+    @GetMapping
     public ResponseEntity<?> getListOfTests() {
         Map<Object, Object> model = new HashMap<>();
         model.put("tests", quizService.getAllTests());
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getQuestionsCount(@RequestParam("testId") Long testId) {
+    @GetMapping(value = "{testId}")
+    public ResponseEntity<?> getQuestionsCount(@PathVariable Long testId) {
         Map<Object, Object> model = new HashMap<>();
         try {
             int count = quizService.getTestQuestionsCount(testId);
@@ -80,20 +80,24 @@ public class QuizController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @PostMapping("rate")
-    public ResponseEntity<?> rateTest(@RequestParam("testId") Long testId, @RequestParam("rate") Integer rate) {
+    @PostMapping("{testId}/rate")
+    public ResponseEntity<?> rateTest(@PathVariable Long testId, @RequestParam("rate") String rate) {
         Map<Object, Object> model = new HashMap<>();
         try {
-            quizService.rateTest(testId, rate);
+            Integer rateInt = Integer.parseInt(rate);
+            quizService.rateTest(testId, rateInt);
         } catch (NoSuchTestException | InvalidDataException e) {
             model.put("message", e.getMessage());
+            return new ResponseEntity<>(model, HttpStatus.BAD_REQUEST);
+        } catch (NumberFormatException e) {
+            model.put("message", "Рейтинг должен быть числом [0;5]");
             return new ResponseEntity<>(model, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @GetMapping(value = "comment")
-    public ResponseEntity<?> getTestComments(@RequestParam("testId") Long testId) {
+    @GetMapping(value = "{testId}/comments")
+    public ResponseEntity<?> getTestComments(@PathVariable Long testId) {
         Map<Object, Object> model = new HashMap<>();
         try {
             model.put("comments", quizService.getAllTestComments(testId));

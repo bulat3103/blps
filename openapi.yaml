@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Quiz Application - OpenAPI 3.0
-  version: 0.0.1-SNAPSHOT 
+  version: 0.0.1-SNAPSHOT
 tags:
   - name: quiz
     description: APIs for tests
@@ -10,33 +10,17 @@ paths:
     get:
       tags:
         - quiz
-      summary: Get the number of questions in the test
-      description: Get the number of questions in the test by id
-      operationId: getQuestionsCount
-      parameters:
-        - name: testId
-          in: query
-          required: true
-          schema:
-            type: "number"
-            format: "int64"
+      summary: List of all tests
+      operationId: getListOfTests
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  count:
-                    type: "number"
-                    format: "int64"
-        '400':
-          description: Test is not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/TestDTO'
     post:
       tags:
         - quiz
@@ -45,9 +29,9 @@ paths:
       operationId: submitTest
       requestBody:
         content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TestAnswersDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestAnswersDTO'
       responses:
         '200':
           description: Result for the test
@@ -64,7 +48,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /quiz/comment:
+  /quiz/{testId}/comments:
     get:
       tags:
         - quiz
@@ -73,7 +57,7 @@ paths:
       operationId: getTestComments
       parameters:
         - name: testId
-          in: query
+          in: path
           required: true
           schema:
             type: "number"
@@ -98,6 +82,13 @@ paths:
         - quiz
       summary: Post comment for the test
       operationId: "writeComment"
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
       requestBody:
         content:
           application/json:
@@ -120,7 +111,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /quiz/question:
+  /quiz/{testId}/question:
     get:
       tags:
         - quiz
@@ -129,12 +120,12 @@ paths:
       operationId: getQuestion
       parameters:
         - name: testId
-          in: query
+          in: path
           required: true
           schema:
             type: "number"
             format: "int64"
-        - name: qNumber
+        - name: q
           in: query
           required: true
           schema:
@@ -153,7 +144,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /quiz/rate:
+  /quiz/{testId}/rate:
     post:
       tags:
         - quiz
@@ -161,7 +152,7 @@ paths:
       operationId: rateTest
       parameters:
         - name: testId
-          in: query
+          in: path
           required: true
           schema:
             type: "number"
@@ -181,21 +172,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /quiz/tests:
+  /quiz/{testId}:
     get:
       tags:
         - quiz
-      summary: List of all tests
-      operationId: getListOfTests
+      summary: Get the number of questions in the test
+      description: Get the number of questions in the test by id
+      operationId: getQuestionsCount
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                type: "array"
-                items:
-                  $ref: '#/components/schemas/TestDTO'
+                type: object
+                properties:
+                  count:
+                    type: "number"
+                    format: "int64"
+        '400':
+          description: Test is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     TestDTO:
@@ -226,14 +233,10 @@ components:
       type: object
       properties:
         message:
-         type: "string"
+          type: "string"
     WriteCommentDTO:
       type: object
       properties:
-        testId:
-          type: "number"
-          format: "int64"
-          nullable: false
         writer:
           type: "string"
           nullable: true
