@@ -22,6 +22,9 @@ public class Test {
     @Column(name = "points_count")
     private Integer pointsCount;
 
+    @Column(name = "rating")
+    private double rating;
+
     public static TestDTO toDto(Test test) {
         return new TestDTO(test.getId(), test.getName(),
                 test.getPointsCount() == 0 ? 0 : test.getPointsSum() * 1.0 / test.getPointsCount());

@@ -12,4 +12,7 @@ import java.util.List;
 public interface TestRepository extends JpaRepository<Test, Long>{
     @Query(value = "select * from tests limit :limit offset :offset",nativeQuery = true)
     List<Test> getAllTests(@Param("limit") int limit, @Param("offset") int offset);
+
+    @Query(value = "select * from tests order by rating DESC limit :limit offset :offset",nativeQuery = true)
+    List<Test> getAllTestsBySortDesc(@Param("limit") int limit, @Param("offset") int offset);
 }

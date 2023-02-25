@@ -49,10 +49,11 @@ public class QuizController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getListOfTests(@RequestParam("limit") Integer limit, @RequestParam("offset") Integer offset)
+    public ResponseEntity<?> getListOfTests(@RequestParam("limit") Integer limit, @RequestParam("offset") Integer offset, @RequestParam("sort") String type)
     throws  InvalidDataException{
         Map<Object, Object> model = new HashMap<>();
-        model.put("tests", quizService.getAllTests(limit, offset));
+        if (!type.equals("ASC") && !type.equals("DESC")) throw new InvalidDataException("Сортировка имеет два типа: ASC, DESC");
+        model.put("tests", quizService.getAllTests(limit, offset, type));
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 

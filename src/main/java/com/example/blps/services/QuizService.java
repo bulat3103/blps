@@ -54,6 +54,7 @@ public class QuizService {
         Test test = oTest.get();
         test.setPointsSum(test.getPointsSum() + rate);
         test.setPointsCount(test.getPointsCount() + 1);
+        test.setRating(test.getPointsCount() == 0 ? 0 : test.getPointsSum() * 1.0 / test.getPointsCount());
         testRepository.save(test);
     }
 
@@ -107,9 +108,11 @@ public class QuizService {
         return testQuestionRepository.countByTestId(testId);
     }
 
-    public List<TestDTO> getAllTests(Integer limit, Integer offset) throws InvalidDataException {
+    public List<TestDTO> getAllTests(Integer limit, Integer offset, String sortType) throws InvalidDataException {
         if (limit < 0) throw new InvalidDataException("Limit должен быть положительным числом");
         if (offset < 0) throw new InvalidDataException("Offset должен быть положительным числом");
-        return testRepository.getAllTests(limit, offset).stream().map(Test::toDto).toList();
+        return sortType.equals("ASC")
+                ? testRepository.getAllTests(limit, offset).stream().map(Test::toDto).toList()
+                : testRepository.getAllTestsBySortDesc(limit, offset).stream().map(Test::toDto).toList();
     }
 }
