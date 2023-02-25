@@ -69,8 +69,8 @@ public class QuizService {
         return Question.toDto(questionRepository.findById(qId).get(), answers);
     }
 
-    public Long writeComment(WriteCommentDTO writeCommentDTO) throws NoSuchTestException {
-        Optional<Test> oTest = testRepository.findById(writeCommentDTO.getTestId());
+    public Long writeComment(Long testId, WriteCommentDTO writeCommentDTO) throws NoSuchTestException {
+        Optional<Test> oTest = testRepository.findById(testId);
         if (oTest.isEmpty()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
