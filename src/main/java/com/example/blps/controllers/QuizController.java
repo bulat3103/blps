@@ -61,9 +61,14 @@ public class QuizController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getListOfTests() {
+    public ResponseEntity<?> getListOfTests(@RequestParam("limit") Integer limit, @RequestParam("offset") Integer offset) {
         Map<Object, Object> model = new HashMap<>();
-        model.put("tests", quizService.getAllTests());
+        try {
+            model.put("tests", quizService.getAllTests(limit, offset));
+        } catch (InvalidDataException e) {
+            model.put("message", e.getMessage());
+            return new ResponseEntity<>(model, HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 

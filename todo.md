@@ -2,4 +2,4 @@
 - handle wrong type of query params (done)
 - пагинация + сортировка тестов
 - controllerAdvice
-- Optional
+- Optional (done)

@@ -66,7 +66,9 @@ public class QuizService {
         if (qNumber <= 0 || qNumber > count) throw new InvalidDataException("Вопроса под таким номером не существует");
         Long qId = testQuestionRepository.getByTestIdAndNumber(testId, qNumber);
         List<String> answers = answerRepository.getAnswersByQuestionId(qId);
-        return Question.toDto(questionRepository.findById(qId).get(), answers);
+        Optional<Question> question = questionRepository.findById(qId);
+        if (question.isEmpty()) throw new InvalidDataException("Такого вопроса не существует");
+        return Question.toDto(question.get(), answers);
     }
 
     public Long writeComment(Long testId, WriteCommentDTO writeCommentDTO) throws NoSuchTestException {
@@ -105,7 +107,9 @@ public class QuizService {
         return testQuestionRepository.countByTestId(testId);
     }
 
-    public List<TestDTO> getAllTests() {
-        return testRepository.findAll().stream().map(Test::toDto).toList();
+    public List<TestDTO> getAllTests(Integer limit, Integer offset) throws InvalidDataException {
+        if (limit < 0) throw new InvalidDataException("Limit должен быть положительным числом");
+        if (offset < 0) throw new InvalidDataException("Offset должен быть положительным числом");
+        return testRepository.getAllTests(limit, offset).stream().map(Test::toDto).toList();
     }
 }
