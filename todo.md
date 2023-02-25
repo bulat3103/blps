@@ -1,5 +1,5 @@
 - endpoint naming (done)
 - handle wrong type of query params (done)
 - пагинация + сортировка тестов
-- controllerAdvice
+- controllerAdvice (done)
 - Optional (done)

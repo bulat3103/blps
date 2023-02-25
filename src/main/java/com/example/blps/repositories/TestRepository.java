@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface TestRepository extends JpaRepository<Test, Long>{
-    @Query(value = "select * from tests limit :limit offset :offser",nativeQuery = true)
+    @Query(value = "select * from tests limit :limit offset :offset",nativeQuery = true)
     List<Test> getAllTests(@Param("limit") int limit, @Param("offset") int offset);
 }

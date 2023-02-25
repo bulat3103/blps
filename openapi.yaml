@@ -12,6 +12,19 @@ paths:
         - quiz
       summary: List of all tests
       operationId: getListOfTests
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int32"
+        - name: offset
+          in: query
+          required: true
+          schema:
+            type: "number"
+            format: "int32"
       responses:
         '200':
           description: Successful operation
