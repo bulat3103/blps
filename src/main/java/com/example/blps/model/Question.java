@@ -1,7 +1,7 @@
 package com.example.blps.model;
 
 import com.example.blps.model.dto.QuestionDTO;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 import java.util.List;

@@ -1,10 +1,7 @@
 package com.example.blps.model;
 
 import com.example.blps.model.ids.TestQuestionId;
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
