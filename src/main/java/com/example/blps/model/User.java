@@ -1,7 +1,8 @@
 package com.example.blps.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
 @Data
