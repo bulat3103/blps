@@ -5,6 +5,10 @@ import com.example.blps.exceptions.NoSuchTestException;
 import com.example.blps.model.*;
 import com.example.blps.model.dto.*;
 import com.example.blps.repositories.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -108,11 +112,13 @@ public class QuizService {
         return testQuestionRepository.countByTestId(testId);
     }
 
-    public List<TestDTO> getAllTests(Integer limit, Integer offset, String sortType) throws InvalidDataException {
-        if (limit < 0) throw new InvalidDataException("Limit должен быть положительным числом");
-        if (offset < 0) throw new InvalidDataException("Offset должен быть положительным числом");
-        return sortType.equals("ASC")
-                ? testRepository.getAllTests(limit, offset).stream().map(Test::toDto).toList()
-                : testRepository.getAllTestsBySortDesc(limit, offset).stream().map(Test::toDto).toList();
+    public List<TestDTO> getAllTests(Integer page, Integer size, String sortType) throws InvalidDataException {
+        if (page < 0) throw new InvalidDataException("Page должен быть положительным числом");
+        if (size < 0) throw new InvalidDataException("Offset должен быть положительным числом");
+        Pageable pagingSort = PageRequest.of(page, size,
+                sortType.equals("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC, "rating");
+        Page<Test> pageTests = testRepository.findAll(pagingSort);
+        List<Test> tests = pageTests.getContent();
+        return tests.stream().map(Test::toDto).toList();
     }
 }

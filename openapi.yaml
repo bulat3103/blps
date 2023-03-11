@@ -13,18 +13,23 @@ paths:
       summary: List of all tests
       operationId: getListOfTests
       parameters:
-        - name: limit
+        - name: page
           in: query
           required: true
           schema:
             type: "number"
             format: "int32"
-        - name: offset
+        - name: size
           in: query
           required: true
           schema:
             type: "number"
             format: "int32"
+        - name: sortType
+          in: query
+          description: ASC, DESC
+          schema:
+            type: string
       responses:
         '200':
           description: Successful operation
