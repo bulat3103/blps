@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -68,6 +69,7 @@ public class QuizService {
         testRepository.save(test);
     }
 
+    @Transactional
     public QuestionDTO getQuestion(Long testId, Integer qNumber) throws NoSuchTestException, InvalidDataException {
         Optional<Test> oTest = testRepository.findById(testId);
         if (!oTest.isPresent()) {
@@ -94,6 +96,7 @@ public class QuizService {
         return comment.getId();
     }
 
+    @Transactional
     public String submitTest(TestAnswersDTO testAnswersDTO) throws NoSuchTestException, InvalidDataException {
         Optional<Test> oTest = testRepository.findById(testAnswersDTO.getTestId());
         if (!oTest.isPresent()) {

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TestQuestionRepository extends JpaRepository<TestQuestion, TestQuestionId> {
 
@@ -15,4 +17,7 @@ public interface TestQuestionRepository extends JpaRepository<TestQuestion, Test
 
     @Query(value = "select count(*) from test_question where test_id = :testId", nativeQuery = true)
     Integer countByTestId(@Param("testId") Long testId);
+
+    @Query(value = "select * from test_question where test_id = :testId", nativeQuery = true)
+    List<TestQuestion> getAllByTestId(@Param("testId")Long testId);
 }

@@ -28,4 +28,11 @@ public class TestResult {
 
     @Column(name = "description")
     private String description;
+
+    public TestResult(Test testId, Integer leftBound, Integer rightBound, String description) {
+        this.testId = testId;
+        this.leftBound = leftBound;
+        this.rightBound = rightBound;
+        this.description = description;
+    }
 }
