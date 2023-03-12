@@ -2,10 +2,10 @@ package com.example.blps.controllers;
 
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
-import com.example.blps.exceptions.NoSuchUserException;
 import com.example.blps.model.dto.QuestionDTO;
 import com.example.blps.model.dto.TestAnswersDTO;
 import com.example.blps.model.dto.WriteCommentDTO;
+import com.example.blps.model.enums.RoleName;
 import com.example.blps.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,7 +58,7 @@ public class QuizController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @GetMapping(value = "{testId}")
+    @GetMapping(value = "{testId}/count")
     public ResponseEntity<?> getQuestionsCount(@PathVariable Long testId) throws NoSuchTestException  {
         Map<Object, Object> model = new HashMap<>();
         int count = quizService.getTestQuestionsCount(testId);
