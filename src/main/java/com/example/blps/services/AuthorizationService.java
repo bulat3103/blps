@@ -1,5 +1,6 @@
 package com.example.blps.services;
 
+import com.example.blps.exceptions.AuthorizeException;
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchUserException;
 import com.example.blps.model.Role;
@@ -32,9 +33,12 @@ public class AuthorizationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public User authUser(LoginRequestDTO loginRequestDTO) throws NoSuchUserException, InvalidDataException {
+    public User authUser(LoginRequestDTO loginRequestDTO) throws NoSuchUserException, InvalidDataException, AuthorizeException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
+        if (!authentication.isAuthenticated()) {
+            throw new AuthorizeException("Ошибка авторизации");
+        }
         Optional<User> userO = userRepository.findByEmail(loginRequestDTO.getEmail());
         if (!userO.isPresent()) {
             throw new NoSuchUserException("Пользователя с таким логином не существует");

@@ -4,3 +4,5 @@ drop table answer;
 drop table test_question;
 drop table questions;
 drop table tests;
+drop table roles;
+drop table users;
