@@ -2,6 +2,7 @@ package com.example.blps.services;
 
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
+import com.example.blps.exceptions.NoSuchUserException;
 import com.example.blps.model.*;
 import com.example.blps.model.dto.*;
 import com.example.blps.repositories.*;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -23,6 +26,7 @@ public class QuizService {
     private final CommentRepository commentRepository;
     private final AnswerRepository answerRepository;
     private final TestResultRepository testResultRepository;
+    private final UserRepository userRepository;
 
     public QuizService(
             TestRepository testRepository,
@@ -30,7 +34,8 @@ public class QuizService {
             QuestionRepository questionRepository,
             CommentRepository commentRepository,
             AnswerRepository answerRepository,
-            TestResultRepository testResultRepository)
+            TestResultRepository testResultRepository,
+            UserRepository userRepository)
     {
         this.testRepository = testRepository;
         this.testQuestionRepository = testQuestionRepository;
@@ -38,6 +43,7 @@ public class QuizService {
         this.commentRepository = commentRepository;
         this.answerRepository = answerRepository;
         this.testResultRepository = testResultRepository;
+        this.userRepository = userRepository;
     }
 
     public List<TestCommentsDTO> getAllTestComments(Long testId) throws NoSuchTestException {
@@ -77,12 +83,14 @@ public class QuizService {
     }
 
     public Long writeComment(Long testId, WriteCommentDTO writeCommentDTO) throws NoSuchTestException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findUserByEmail(userDetails.getUsername());
         Optional<Test> oTest = testRepository.findById(testId);
         if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         Comment comment = commentRepository.save(new Comment(oTest.get(), new Timestamp(System.currentTimeMillis()),
-                writeCommentDTO.getWriter(), writeCommentDTO.getComment()));
+                user.getName(), writeCommentDTO.getComment()));
         return comment.getId();
     }
 

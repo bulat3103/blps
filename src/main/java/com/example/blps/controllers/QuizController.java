@@ -2,6 +2,7 @@ package com.example.blps.controllers;
 
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
+import com.example.blps.exceptions.NoSuchUserException;
 import com.example.blps.model.dto.QuestionDTO;
 import com.example.blps.model.dto.TestAnswersDTO;
 import com.example.blps.model.dto.WriteCommentDTO;
@@ -31,8 +32,8 @@ public class QuizController {
     }
 
     @PostMapping(value = "{testId}/comments")
-    public ResponseEntity<?> writeComment(@PathVariable Long testId,@RequestBody WriteCommentDTO writeCommentDTO)
-    throws NoSuchTestException{
+    public ResponseEntity<?> writeComment(@PathVariable Long testId, @RequestBody WriteCommentDTO writeCommentDTO)
+    throws NoSuchTestException {
         Map<Object, Object> model = new HashMap<>();
         Long id = quizService.writeComment(testId, writeCommentDTO);
         model.put("id", id);

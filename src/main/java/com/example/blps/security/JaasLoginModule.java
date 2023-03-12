@@ -14,7 +14,6 @@ import javax.security.auth.spi.LoginModule;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 public class JaasLoginModule implements LoginModule {
@@ -40,11 +39,11 @@ public class JaasLoginModule implements LoginModule {
             callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});
             username = nameCallback.getName();
             String password = String.valueOf(passwordCallback.getPassword());
-            Optional<User> userO = userRepository.findByEmail(username);
-            if (!userO.isPresent()) {
+            User user = userRepository.findUserByEmail(username);
+            if (user == null) {
                 throw new NoSuchUserException("Пользователя с таким логином не существует");
             }
-            loginSucceeded = passwordEncoder.matches(password, userO.get().getPassword());
+            loginSucceeded = passwordEncoder.matches(password, user.getPassword());
         } catch (NoSuchUserException e) {
             log.warn(e.getMessage());
             loginSucceeded = false;
