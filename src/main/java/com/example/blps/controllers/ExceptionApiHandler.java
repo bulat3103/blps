@@ -1,5 +1,6 @@
 package com.example.blps.controllers;
 
+import com.example.blps.exceptions.AuthorizeException;
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
 import org.springframework.http.HttpStatus;
@@ -38,5 +39,10 @@ public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Рейтинг должен быть числом [0;5]");
+    }
+
+    @ExceptionHandler(AuthorizeException.class)
+    protected ResponseEntity<Object> Authorize(AuthorizeException exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
     }
 }

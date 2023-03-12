@@ -42,7 +42,7 @@ public class QuizService {
 
     public List<TestCommentsDTO> getAllTestComments(Long testId) throws NoSuchTestException {
         Optional<Test> oTest = testRepository.findById(testId);
-        if (oTest.isEmpty()) {
+        if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         List<Comment> testsComments = commentRepository.getAllByTestId(testId);
@@ -51,7 +51,7 @@ public class QuizService {
 
     public void rateTest(Long testId, Integer rate) throws NoSuchTestException, InvalidDataException {
         Optional<Test> oTest = testRepository.findById(testId);
-        if (oTest.isEmpty()) {
+        if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         if (rate < 0 || rate > 5) throw new InvalidDataException("Оценка должна быть в интервале от [0;5]");
@@ -64,7 +64,7 @@ public class QuizService {
 
     public QuestionDTO getQuestion(Long testId, Integer qNumber) throws NoSuchTestException, InvalidDataException {
         Optional<Test> oTest = testRepository.findById(testId);
-        if (oTest.isEmpty()) {
+        if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         Integer count = testQuestionRepository.countByTestId(testId);
@@ -72,13 +72,13 @@ public class QuizService {
         Long qId = testQuestionRepository.getByTestIdAndNumber(testId, qNumber);
         List<String> answers = answerRepository.getAnswersByQuestionId(qId);
         Optional<Question> question = questionRepository.findById(qId);
-        if (question.isEmpty()) throw new InvalidDataException("Такого вопроса не существует");
+        if (!question.isPresent()) throw new InvalidDataException("Такого вопроса не существует");
         return Question.toDto(question.get(), answers);
     }
 
     public Long writeComment(Long testId, WriteCommentDTO writeCommentDTO) throws NoSuchTestException {
         Optional<Test> oTest = testRepository.findById(testId);
-        if (oTest.isEmpty()) {
+        if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         Comment comment = commentRepository.save(new Comment(oTest.get(), new Timestamp(System.currentTimeMillis()),
@@ -88,7 +88,7 @@ public class QuizService {
 
     public String submitTest(TestAnswersDTO testAnswersDTO) throws NoSuchTestException, InvalidDataException {
         Optional<Test> oTest = testRepository.findById(testAnswersDTO.getTestId());
-        if (oTest.isEmpty()) {
+        if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         Integer count = testQuestionRepository.countByTestId(testAnswersDTO.getTestId());
@@ -106,7 +106,7 @@ public class QuizService {
 
     public Integer getTestQuestionsCount(Long testId) throws NoSuchTestException {
         Optional<Test> oTest = testRepository.findById(testId);
-        if (oTest.isEmpty()) {
+        if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         return testQuestionRepository.countByTestId(testId);
@@ -119,6 +119,6 @@ public class QuizService {
                 sortType.equals("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC, "rating");
         Page<Test> pageTests = testRepository.findAll(pagingSort);
         List<Test> tests = pageTests.getContent();
-        return tests.stream().map(Test::toDto).toList();
+        return tests.stream().map(Test::toDto).collect(Collectors.toList());
     }
 }

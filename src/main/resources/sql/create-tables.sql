@@ -46,3 +46,18 @@ create table comments
     writer text,
     comment text not null
 );
+
+create table roles
+(
+    id bigint primary key not null,
+    name varchar(20) not null
+);
+
+create table users
+(
+    id bigint primary key not null,
+    name text not null,
+    email text unique not null,
+    password text not null,
+    role_id bigint not null references roles(id)
+);

@@ -1,5 +1,6 @@
 package com.example.blps.repositories;
 
+import com.example.blps.model.Role;
 import com.example.blps.model.User;
 import com.example.blps.model.enums.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByEmail(String email);
 
     List<User> findAllByRoleName(RoleName role);
+
+    default Role findRoleByEmail(String email) {
+        User user = findByEmail(email).get();
+        return user.getRole();
+    }
 }
