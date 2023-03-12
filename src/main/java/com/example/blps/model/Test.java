@@ -3,10 +3,12 @@ package com.example.blps.model;
 import com.example.blps.model.dto.TestDTO;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "tests")
+@NoArgsConstructor
 public class Test {
     @Id
     @Column(name = "id", nullable = false)
@@ -28,5 +30,9 @@ public class Test {
     public static TestDTO toDto(Test test) {
         return new TestDTO(test.getId(), test.getName(),
                 test.getPointsCount() == 0 ? 0 : test.getPointsSum() * 1.0 / test.getPointsCount());
+    }
+
+    public Test(String name) {
+        this.name = name;
     }
 }
