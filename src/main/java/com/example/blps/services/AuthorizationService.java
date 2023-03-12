@@ -39,13 +39,9 @@ public class AuthorizationService {
         if (!authentication.isAuthenticated()) {
             throw new AuthorizeException("Ошибка авторизации");
         }
-        Optional<User> userO = userRepository.findByEmail(loginRequestDTO.getEmail());
-        if (!userO.isPresent()) {
+        User user = userRepository.findUserByEmail(loginRequestDTO.getEmail());
+        if (user == null) {
             throw new NoSuchUserException("Пользователя с таким логином не существует");
-        }
-        User user = userO.get();
-        if (!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
-            throw new InvalidDataException("Неправильный пароль");
         }
         return user;
     }
@@ -55,7 +51,7 @@ public class AuthorizationService {
         if (userRepository.existsByEmail(registerRequestDTO.getEmail())) {
             throw new InvalidDataException("Пользователь с таким email уже существует");
         }
-        Optional<Role> roleO = roleRepository.findByName(RoleName.valueOf(registerRequestDTO.getName()));
+        Optional<Role> roleO = roleRepository.findByName(RoleName.valueOf(registerRequestDTO.getRole()));
         if (!roleO.isPresent()) {
             throw new InvalidDataException("Такой роли не существует");
         }

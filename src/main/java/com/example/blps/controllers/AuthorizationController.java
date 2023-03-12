@@ -30,7 +30,7 @@ public class AuthorizationController {
     @Autowired
     private AuthorizationService authorizationService;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> authUser(@RequestBody LoginRequestDTO loginRequestDTO) throws InvalidDataException, NoSuchUserException {
         Map<Object, Object> model = new HashMap<>();
         User authUser = authorizationService.authUser(loginRequestDTO);
@@ -38,7 +38,7 @@ public class AuthorizationController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequestDTO registerRequestDTO) throws InvalidDataException {
         Map<Object, Object> model = new HashMap<>();
         User newUser = authorizationService.registerUser(registerRequestDTO);
