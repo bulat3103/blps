@@ -1,5 +1,6 @@
 package com.example.blps.configuration;
 
+import com.example.blps.model.enums.RoleName;
 import com.example.blps.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -63,6 +64,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/quiz/**/comments").permitAll()
                         .antMatchers(HttpMethod.GET, "/quiz/*\b").permitAll()
+                        .antMatchers(HttpMethod.POST, "/quiz/**/comments").hasRole(RoleName.USER.name())
+                        .antMatchers(HttpMethod.GET, "/quiz/**/question").hasRole(RoleName.USER.name())
+                        .antMatchers(HttpMethod.POST, "/quiz/**/rate").hasRole(RoleName.USER.name())
+                        .antMatchers(HttpMethod.POST, "/quiz").hasRole(RoleName.USER.name())
+                        .antMatchers("/admin/*").hasRole(RoleName.ADMIN.name())
                         .anyRequest().authenticated();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
