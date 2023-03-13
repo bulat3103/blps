@@ -19,10 +19,10 @@ public class Test {
     private String name;
 
     @Column(name = "points_sum")
-    private Integer pointsSum;
+    private int pointsSum;
 
     @Column(name = "points_count")
-    private Integer pointsCount;
+    private int pointsCount;
 
     @Column(name = "rating")
     private double rating;

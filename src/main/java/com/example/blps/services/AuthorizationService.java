@@ -51,15 +51,11 @@ public class AuthorizationService {
         if (userRepository.existsByEmail(registerRequestDTO.getEmail())) {
             throw new InvalidDataException("Пользователь с таким email уже существует");
         }
-        Optional<Role> roleO = roleRepository.findByName(RoleName.valueOf(registerRequestDTO.getRole()));
-        if (!roleO.isPresent()) {
-            throw new InvalidDataException("Такой роли не существует");
-        }
         User user = new User(
                 registerRequestDTO.getName(),
                 registerRequestDTO.getEmail(),
                 passwordEncoder.encode(registerRequestDTO.getPassword()),
-                roleO.get()
+                roleRepository.findByName(RoleName.USER)
         );
         user = userRepository.save(user);
         return user;
