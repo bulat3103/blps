@@ -28,7 +28,7 @@ public class AuthorizationController {
     private AuthorizationService authorizationService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authUser(@RequestBody LoginRequestDTO loginRequestDTO) throws InvalidDataException, NoSuchUserException {
+    public ResponseEntity<?> authUser(@RequestBody LoginRequestDTO loginRequestDTO) throws NoSuchUserException {
         Map<Object, Object> model = new HashMap<>();
         User authUser = authorizationService.authUser(loginRequestDTO);
         model.put("token", jwtUtil.generateToken(authUser.getEmail()));

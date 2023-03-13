@@ -33,7 +33,7 @@ public class AuthorizationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public User authUser(LoginRequestDTO loginRequestDTO) throws NoSuchUserException, InvalidDataException, AuthorizeException {
+    public User authUser(LoginRequestDTO loginRequestDTO) throws NoSuchUserException, AuthorizeException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
         if (!authentication.isAuthenticated()) {

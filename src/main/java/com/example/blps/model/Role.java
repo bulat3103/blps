@@ -4,12 +4,13 @@ import com.example.blps.model.enums.RoleName;
 import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +20,8 @@ public class Role {
     @Column(name = "name")
     private RoleName name;
 
-    public Role(RoleName name) {
-        this.name = name;
+    @Override
+    public String getAuthority() {
+        return name.name();
     }
 }
