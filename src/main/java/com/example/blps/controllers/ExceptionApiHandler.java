@@ -3,6 +3,7 @@ package com.example.blps.controllers;
 import com.example.blps.exceptions.AuthorizeException;
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
+import com.example.blps.exceptions.NoSuchUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,6 +16,13 @@ public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NoSuchTestException.class)
     protected ResponseEntity<Object> NoSuchTest(NoSuchTestException exception) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(NoSuchUserException.class)
+    protected ResponseEntity<Object> NoSuchUser(NoSuchUserException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(exception.getMessage());

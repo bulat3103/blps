@@ -5,6 +5,10 @@ info:
 tags:
   - name: quiz
     description: APIs for tests
+  - name: auth
+    description: APIs for authentication
+  - name: admin
+    description: APIs for admins
 paths:
   /quiz:
     get:
@@ -221,6 +225,135 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Sign in account
+      description: Sign in with username and password
+      operationId: authUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: "string"
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register new account
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequestDTO'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: "string"
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/quiz/{testId}:
+    delete:
+      tags:
+        - admin
+      summary: Delete test
+      description: Delete test by id
+      operationId: deleteTest
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Test is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/user/{userId}:
+    delete:
+      tags:
+        - admin
+      summary: Delete person
+      description: Delete person by id
+      operationId: deletePerson
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: User is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/quiz:
+    post:
+      tags:
+        - admin
+      summary: Create new test
+      operationId: createTest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTestDTO'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "number"
+                    format: "int64"
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     TestDTO:
@@ -255,9 +388,6 @@ components:
     WriteCommentDTO:
       type: object
       properties:
-        writer:
-          type: "string"
-          nullable: true
         comment:
           type: "string"
           nullable: false
@@ -287,6 +417,27 @@ components:
           nullable: false
         answers:
           $ref: '#/components/schemas/TestAnswer'
+    LoginRequestDTO:
+      type: object
+      properties:
+        username:
+          type: "string"
+          nullable: false
+        password:
+          type: "string"
+          nullable: false
+    RegisterRequestDTO:
+      type: object
+      properties:
+        name:
+          type: "string"
+          nullable: false
+        email:
+          type: "string"
+          nullable: false
+        password:
+          type: "string"
+          nullable: false
     TestAnswer:
       type: object
       properties:
@@ -300,3 +451,51 @@ components:
       example:
         1: 1
         2: 2
+    CreateTestResutDTO:
+      type: object
+      properties:
+        leftBound:
+          type: "number"
+          format: "int32"
+          nullable: false
+        rightBound:
+          type: "number"
+          format: "int32"
+          nullable: false
+        description:
+          type: "string"
+          nullable: false
+    CreateAnswerDTO:
+      type: object
+      properties:
+        rate:
+          type: "number"
+          format: "int32"
+          nullable: false
+        answer:
+          type: "string"
+          nullable: false
+    CreateQuestionDTO:
+      type: object
+      properties:
+        text:
+          type: "string"
+          nullable: false
+        answers:
+          type: "array"
+          items:
+            $ref: '#/components/schemas/CreateAnswerDTO'
+    CreateTestDTO:
+      type: object
+      properties:
+        name:
+          type: "string"
+          nullable: false
+        questions:
+          type: "array"
+          items:
+            $ref: '#/components/schemas/CreateQuestionDTO'
+        results:
+          type: "array"
+          items:
+            $ref: '#/components/schemas/CreateTestResutDTO'

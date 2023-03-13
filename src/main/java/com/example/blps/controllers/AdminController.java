@@ -8,6 +8,8 @@ import com.example.blps.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,8 +35,8 @@ public class AdminController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @DeleteMapping("/user")
-    public ResponseEntity<?> deletePerson(@RequestParam("id") Long userId) throws NoSuchUserException {
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<?> deletePerson(@PathVariable Long userId) throws NoSuchUserException {
         Map<Object, Object> model = new HashMap<>();
         adminService.deletePerson(userId);
         return new ResponseEntity<>(model, HttpStatus.OK);
