@@ -2,7 +2,6 @@ package com.example.blps.services;
 
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchTestException;
-import com.example.blps.exceptions.NoSuchUserException;
 import com.example.blps.model.*;
 import com.example.blps.model.dto.*;
 import com.example.blps.repositories.*;
