@@ -5,7 +5,6 @@ import com.example.blps.exceptions.NoSuchTestException;
 import com.example.blps.model.dto.QuestionDTO;
 import com.example.blps.model.dto.TestAnswersDTO;
 import com.example.blps.model.dto.WriteCommentDTO;
-import com.example.blps.model.enums.RoleName;
 import com.example.blps.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
