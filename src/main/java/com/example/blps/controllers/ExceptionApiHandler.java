@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.security.auth.login.LoginException;
+
 @RestControllerAdvice
 public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
 
@@ -19,6 +21,12 @@ public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(LoginException.class)
+    protected ResponseEntity<Object> AuthException(LoginException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Проверьте правильность ввода логина и пароля");
     }
 
     @ExceptionHandler(NoSuchUserException.class)
