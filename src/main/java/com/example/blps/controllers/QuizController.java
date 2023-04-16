@@ -22,9 +22,15 @@ public class QuizController {
     private QuizService quizService;
 
     @GetMapping(value = "{testId}/question")
-    public ResponseEntity<?> getQuestion(@PathVariable Long testId, @RequestParam("q") Integer qNumber)
+    public ResponseEntity<?> getQuestion(@PathVariable Long testId, @RequestParam("q") String questionN)
             throws NoSuchTestException, InvalidDataException {
         Map<Object, Object> model = new HashMap<>();
+        int qNumber;
+        try {
+            qNumber = Integer.parseInt(questionN);
+        } catch (NumberFormatException e) {
+            throw new InvalidDataException("Номер вопроса должен быть числом");
+        }
         QuestionDTO question = quizService.getQuestion(testId, qNumber);
         model.put("question", question);
         return new ResponseEntity<>(model, HttpStatus.OK);
@@ -67,9 +73,14 @@ public class QuizController {
 
     @PostMapping("{testId}/rate")
     public ResponseEntity<?> rateTest(@PathVariable Long testId, @RequestParam("rate") String rate)
-            throws NoSuchTestException, InvalidDataException, NumberFormatException {
+            throws NoSuchTestException, InvalidDataException {
         Map<Object, Object> model = new HashMap<>();
-        Integer rateInt = Integer.parseInt(rate);
+        int rateInt;
+        try {
+            rateInt = Integer.parseInt(rate);
+        } catch (NumberFormatException e) {
+            throw new InvalidDataException("Рейтинг должен быть числом [0;5]");
+        }
         quizService.rateTest(testId, rateInt);
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
