@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -27,6 +26,7 @@ public class QuizService {
     private final AnswerRepository answerRepository;
     private final TestResultRepository testResultRepository;
     private final UserRepository userRepository;
+    private final RateRepository rateRepository;
 
     public QuizService(
             TestRepository testRepository,
@@ -35,7 +35,8 @@ public class QuizService {
             CommentRepository commentRepository,
             AnswerRepository answerRepository,
             TestResultRepository testResultRepository,
-            UserRepository userRepository)
+            UserRepository userRepository,
+            RateRepository rateRepository)
     {
         this.testRepository = testRepository;
         this.testQuestionRepository = testQuestionRepository;
@@ -44,6 +45,7 @@ public class QuizService {
         this.answerRepository = answerRepository;
         this.testResultRepository = testResultRepository;
         this.userRepository = userRepository;
+        this.rateRepository = rateRepository;
     }
 
     public List<TestCommentsDTO> getAllTestComments(Long testId) throws NoSuchTestException {
@@ -56,16 +58,15 @@ public class QuizService {
     }
 
     public void rateTest(Long testId, Integer rate) throws NoSuchTestException, InvalidDataException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findUserByEmail(userDetails.getUsername());
         Optional<Test> oTest = testRepository.findById(testId);
         if (!oTest.isPresent()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         if (rate < 0 || rate > 5) throw new InvalidDataException("Оценка должна быть в интервале от [0;5]");
         Test test = oTest.get();
-        test.setPointsSum(test.getPointsSum() + rate);
-        test.setPointsCount(test.getPointsCount() + 1);
-        test.setRating(test.getPointsCount() == 0 ? 0 : test.getPointsSum() * 1.0 / test.getPointsCount());
-        testRepository.save(test);
+        rateRepository.save(new Rate(test, user, new Timestamp(System.currentTimeMillis()), rate));
     }
 
     public QuestionDTO getQuestion(Long testId, Integer qNumber) throws NoSuchTestException, InvalidDataException {

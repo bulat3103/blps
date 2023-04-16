@@ -2,8 +2,7 @@ create table tests
 (
     id bigint primary key not null,
     name text not null,
-    points_sum int not null default 0,
-    points_count int not null default 0
+    rating double precision not null default 0
 );
 
 create table questions
@@ -60,4 +59,13 @@ create table users
     email text unique not null,
     password text not null,
     role_id bigint not null references roles(id)
+);
+
+create table rates
+(
+    id bigint primary key not null,
+    test_id bigint not null references tests(id),
+    user_id bigint not null references users(id),
+    date timestamp not null,
+    rate int not null
 );

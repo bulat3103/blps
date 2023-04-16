@@ -18,21 +18,15 @@ public class Test {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "points_sum")
-    private int pointsSum;
-
-    @Column(name = "points_count")
-    private int pointsCount;
-
     @Column(name = "rating")
     private double rating;
 
     public static TestDTO toDto(Test test) {
-        return new TestDTO(test.getId(), test.getName(),
-                test.getPointsCount() == 0 ? 0 : test.getPointsSum() * 1.0 / test.getPointsCount());
+        return new TestDTO(test.getId(), test.getName(), test.getRating());
     }
 
-    public Test(String name) {
+    public Test(String name, double rating) {
         this.name = name;
+        this.rating = rating;
     }
 }
