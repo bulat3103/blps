@@ -1,10 +1,9 @@
 package com.example.blps.controllers;
 
 import com.example.blps.exceptions.InvalidDataException;
-import com.example.blps.exceptions.NoRightsException;
-import com.example.blps.exceptions.NoSuchTestException;
 import com.example.blps.model.dto.createTest.CreateTestDTO;
 import com.example.blps.services.TestManagerService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,16 +22,9 @@ public class TestManageController {
     }
 
     @PostMapping("/quiz")
-    public ResponseEntity<?> createTest(@RequestBody CreateTestDTO createTestDTO) {
+    public ResponseEntity<?> createTest(@RequestBody CreateTestDTO createTestDTO) throws InvalidDataException, JsonProcessingException {
         Map<Object, Object> model = new HashMap<>();
-        model.put("id", testManagerService.createTest(createTestDTO));
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/quiz/{testId}")
-    public ResponseEntity<?> deleteTest(@PathVariable Long testId) throws NoSuchTestException, NoRightsException {
-        Map<Object, Object> model = new HashMap<>();
-        testManagerService.deleteTest(testId);
+        testManagerService.createTest(createTestDTO);
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 

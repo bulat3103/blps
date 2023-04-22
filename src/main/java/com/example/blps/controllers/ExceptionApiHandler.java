@@ -69,11 +69,4 @@ public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
                 .status(HttpStatus.FORBIDDEN)
                 .body(doModel(HttpStatus.FORBIDDEN, exception.getMessage(), "AuthorizeException"));
     }
-
-    @ExceptionHandler(NoRightsException.class)
-    protected ResponseEntity<Object> NoRights(NoRightsException exception) {
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body(doModel(HttpStatus.FORBIDDEN, exception.getMessage(), "NoRightsException"));
-    }
 }

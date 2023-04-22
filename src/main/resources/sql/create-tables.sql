@@ -1,29 +1,30 @@
 create table roles
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     name varchar(20) not null
 );
 
 create table users
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     name text not null,
     email text unique not null,
     password text not null,
     role_id bigint not null references roles(id)
 );
 
-create table test_create_status
+create table test_status
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     user_id bigint not null references users(id),
     status text not null,
-    test_name text not null
+    test_name text not null,
+    test_json text not null
 );
 
 create table tests
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     name text not null,
     rating double precision not null default 0,
     owner bigint not null references users(id)
@@ -31,7 +32,7 @@ create table tests
 
 create table questions
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     text text not null
 );
 
@@ -54,7 +55,7 @@ create table answer
 
 create table test_result
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     test_id bigint not null references tests(id),
     left_bound int not null,
     right_bound int not null,
@@ -63,7 +64,7 @@ create table test_result
 
 create table comments
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     test_id bigint not null references tests(id),
     write_date timestamp not null,
     writer text,
@@ -72,7 +73,7 @@ create table comments
 
 create table rates
 (
-    id bigint primary key not null,
+    id bigserial primary key not null,
     test_id bigint not null references tests(id),
     user_id bigint not null references users(id),
     date timestamp not null,

@@ -1,6 +1,6 @@
 package com.example.blps.model.dto;
 
-import com.example.blps.model.TestCreateStatus;
+import com.example.blps.model.TestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ public class TestStatusDTO {
     private String testName;
     private String status;
 
-    public static TestStatusDTO toDto(TestCreateStatus status) {
-        return new TestStatusDTO(status.getId(), status.getTestName(), status.getStatus());
+    public static TestStatusDTO toDto(TestStatus test) {
+        return new TestStatusDTO(test.getId(), test.getTestName(), test.getStatus());
     }
 }
