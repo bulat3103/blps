@@ -18,21 +18,19 @@ public class Test {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "points_sum")
-    private int pointsSum;
-
-    @Column(name = "points_count")
-    private int pointsCount;
-
     @Column(name = "rating")
     private double rating;
 
+    @ManyToOne
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    private User owner;
+
     public static TestDTO toDto(Test test) {
-        return new TestDTO(test.getId(), test.getName(),
-                test.getPointsCount() == 0 ? 0 : test.getPointsSum() * 1.0 / test.getPointsCount());
+        return new TestDTO(test.getId(), test.getName(), test.getRating(), test.getOwner().getName());
     }
 
-    public Test(String name) {
+    public Test(String name, double rating) {
         this.name = name;
+        this.rating = rating;
     }
 }

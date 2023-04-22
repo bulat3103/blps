@@ -65,7 +65,7 @@ public class AdminService {
     public Long createTest(CreateTestDTO createTestDTO) throws InvalidDataException {
         for (CreateQuestionDTO questionDTO : createTestDTO.getQuestions()) validateQuestions(questionDTO);
         for (CreateTestResultDTO resultDTO : createTestDTO.getResults()) validateTestResult(resultDTO);
-        Test newTest = testRepository.save(new Test(createTestDTO.getName()));
+        Test newTest = testRepository.save(new Test(createTestDTO.getName(), 0));
         for (CreateTestResultDTO resultDTO : createTestDTO.getResults()) {
             testResultRepository.save(new TestResult(newTest, resultDTO.getLeftBound(), resultDTO.getRightBound(), resultDTO.getDescription()));
         }
