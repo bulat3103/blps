@@ -23,7 +23,7 @@ public class TestManageController {
     }
 
     @PostMapping("/quiz")
-    public ResponseEntity<?> createTest(@RequestBody CreateTestDTO createTestDTO) throws InvalidDataException {
+    public ResponseEntity<?> createTest(@RequestBody CreateTestDTO createTestDTO) {
         Map<Object, Object> model = new HashMap<>();
         model.put("id", testManagerService.createTest(createTestDTO));
         return new ResponseEntity<>(model, HttpStatus.OK);
@@ -39,7 +39,7 @@ public class TestManageController {
     @GetMapping("/statuses")
     public ResponseEntity<?> getStatuses() {
         Map<Object, Object> model = new HashMap<>();
-        testManagerService.getStatuses();
+        model.put("statuses", testManagerService.getStatuses());
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 }

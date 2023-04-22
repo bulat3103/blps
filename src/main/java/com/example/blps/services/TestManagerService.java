@@ -3,6 +3,7 @@ package com.example.blps.services;
 import com.example.blps.exceptions.NoRightsException;
 import com.example.blps.exceptions.NoSuchTestException;
 import com.example.blps.model.*;
+import com.example.blps.model.dto.TestStatusDTO;
 import com.example.blps.model.dto.createTest.CreateTestDTO;
 import com.example.blps.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TestManagerService {
@@ -28,6 +30,8 @@ public class TestManagerService {
     private CommentRepository commentRepository;
     @Autowired
     private MessageSenderService messageSenderService;
+    @Autowired
+    private TestStatusRepository testStatusRepository;
 
     public String createTest(CreateTestDTO createTestDTO) {
         try {
@@ -57,9 +61,10 @@ public class TestManagerService {
         testRepository.delete(test);
     }
 
-    public Object getStatuses() {
+    public List<TestStatusDTO> getStatuses() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findUserByEmail(userDetails.getUsername());
-        return null;
+        List<TestCreateStatus> allByUser = testStatusRepository.getAllByUser(user.getId());
+        return allByUser.stream().map(TestStatusDTO::toDto).collect(Collectors.toList());
     }
 }
