@@ -24,4 +24,10 @@ public class TestCreateStatus {
 
     @Column(name = "test_name", nullable = false)
     private String testName;
+
+    public TestCreateStatus(User userId, String status, String testName) {
+        this.userId = userId;
+        this.status = status;
+        this.testName = testName;
+    }
 }

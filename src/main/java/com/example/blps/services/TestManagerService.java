@@ -34,8 +34,11 @@ public class TestManagerService {
     private TestStatusRepository testStatusRepository;
 
     public String createTest(CreateTestDTO createTestDTO) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findUserByEmail(userDetails.getUsername());
         try {
             messageSenderService.sendMessageToBroker(createTestDTO);
+            testStatusRepository.save(new TestCreateStatus(user, "IN_PROGRESS", createTestDTO.getName()));
         } catch (Exception e) {
             return "Произошла ошибка при отправке данных";
         }
