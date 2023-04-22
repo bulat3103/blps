@@ -21,8 +21,12 @@ public class Test {
     @Column(name = "rating")
     private double rating;
 
+    @ManyToOne
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    private User owner;
+
     public static TestDTO toDto(Test test) {
-        return new TestDTO(test.getId(), test.getName(), test.getRating());
+        return new TestDTO(test.getId(), test.getName(), test.getRating(), test.getOwner().getName());
     }
 
     public Test(String name, double rating) {

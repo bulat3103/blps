@@ -1,9 +1,6 @@
 package com.example.blps.controllers;
 
-import com.example.blps.exceptions.AuthorizeException;
-import com.example.blps.exceptions.InvalidDataException;
-import com.example.blps.exceptions.NoSuchTestException;
-import com.example.blps.exceptions.NoSuchUserException;
+import com.example.blps.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -71,5 +68,12 @@ public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(doModel(HttpStatus.FORBIDDEN, exception.getMessage(), "AuthorizeException"));
+    }
+
+    @ExceptionHandler(NoRightsException.class)
+    protected ResponseEntity<Object> NoRights(NoRightsException exception) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(doModel(HttpStatus.FORBIDDEN, exception.getMessage(), "NoRightsException"));
     }
 }

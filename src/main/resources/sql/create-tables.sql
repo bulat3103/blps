@@ -1,8 +1,32 @@
+create table roles
+(
+    id bigint primary key not null,
+    name varchar(20) not null
+);
+
+create table users
+(
+    id bigint primary key not null,
+    name text not null,
+    email text unique not null,
+    password text not null,
+    role_id bigint not null references roles(id)
+);
+
+create table test_create_status
+(
+    id bigint primary key not null,
+    user_id bigint not null references users(id),
+    status text not null,
+    test_name text not null
+);
+
 create table tests
 (
     id bigint primary key not null,
     name text not null,
-    rating double precision not null default 0
+    rating double precision not null default 0,
+    owner bigint not null references users(id)
 );
 
 create table questions
@@ -44,21 +68,6 @@ create table comments
     write_date timestamp not null,
     writer text,
     comment text not null
-);
-
-create table roles
-(
-    id bigint primary key not null,
-    name varchar(20) not null
-);
-
-create table users
-(
-    id bigint primary key not null,
-    name text not null,
-    email text unique not null,
-    password text not null,
-    role_id bigint not null references roles(id)
 );
 
 create table rates

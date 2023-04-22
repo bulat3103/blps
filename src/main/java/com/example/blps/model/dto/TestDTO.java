@@ -11,4 +11,5 @@ public class TestDTO {
     private Long id;
     private String name;
     private Double rate;
+    private String owner;
 }
