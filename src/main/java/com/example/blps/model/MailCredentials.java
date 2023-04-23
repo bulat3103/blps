@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MailCredentials {
     private String email;
-    private String newStatus;
+    private String subject;
     private String message;
 }

@@ -76,15 +76,15 @@ public class AdminService {
         Optional<TestStatus> testStatusOptional = testStatusRepository.findById(statusId);
         if (!testStatusOptional.isPresent()) throw new InvalidDataException("Такой записи не существует");
         TestStatus testStatus = testStatusOptional.get();
+        CreateTestDTO createTestDTO = objectMapper.readValue(testStatus.getTestJson(), CreateTestDTO.class);
         if (changeStatusDTO.getStatus().equals("APPROVE")) {
-            CreateTestDTO createTestDTO = objectMapper.readValue(testStatus.getTestJson(), CreateTestDTO.class);
             createTest(createTestDTO);
         }
         testStatus.setStatus(changeStatusDTO.getStatus());
         testStatusRepository.save(testStatus);
         MailCredentials mailCredentials = new MailCredentials(
                 testStatus.getUserId().getEmail(),
-                changeStatusDTO.getStatus(),
+                "Статус теста " + createTestDTO.getName() + " изменился на " + changeStatusDTO.getStatus(),
                 changeStatusDTO.getMessage());
         try {
             messageSenderService.sendMessageToBroker(mailCredentials);
