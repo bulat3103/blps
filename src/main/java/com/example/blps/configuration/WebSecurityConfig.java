@@ -69,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/quiz/*/question*").hasRole(RoleName.USER.name())
                 .antMatchers(HttpMethod.POST, "/quiz/*/rate").hasRole(RoleName.USER.name())
                 .antMatchers(HttpMethod.POST, "/quiz").hasRole(RoleName.USER.name())
+                .antMatchers("/manage/**").hasRole(RoleName.USER.name())
                 .antMatchers("/admin/**").hasRole(RoleName.ADMIN.name())
                 .anyRequest().authenticated();
         http.headers().frameOptions().sameOrigin();

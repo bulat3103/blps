@@ -29,8 +29,9 @@ public class Test {
         return new TestDTO(test.getId(), test.getName(), test.getRating(), test.getOwner().getName());
     }
 
-    public Test(String name, double rating) {
+    public Test(String name, double rating, User owner) {
         this.name = name;
         this.rating = rating;
+        this.owner = owner;
     }
 }
