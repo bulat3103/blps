@@ -9,6 +9,8 @@ tags:
     description: APIs for authentication
   - name: admin
     description: APIs for admins
+  - name: manage
+    description: APIs for managing test
 paths:
   /quiz:
     get:
@@ -326,10 +328,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /admin/quiz:
+  /admin/quiz/status/{statusId}:
     post:
       tags:
         - admin
+      summary: Change test status
+      operationId: changeStatus
+      parameters:
+        - name: statusId
+          in: path
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeStatusDTO'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/quiz/status:
+    get:
+      tags:
+        - admin
+      summary: Get quiz statuses
+      operationId: quizStatuses
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestStatusDTO'
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /manage/quiz:
+    post:
+      tags:
+        - manage
       summary: Create new test
       operationId: createTest
       requestBody:
@@ -348,6 +398,27 @@ paths:
                   id:
                     type: "number"
                     format: "int64"
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /manage/statuses:
+    get:
+      tags:
+        - manage
+      summary: Get quiz statuses
+      operationId: getStatuses
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestStatusDTO'
         '400':
           description: Invalid data
           content:
@@ -499,3 +570,25 @@ components:
           type: "array"
           items:
             $ref: '#/components/schemas/CreateTestResutDTO'
+    ChangeStatusDTO:
+      type: object
+      properties:
+        status:
+          type: "string"
+          nullable: false
+        message:
+          type: "string"
+          nullable: false
+    TestStatusDTO:
+      type: object
+      properties:
+        id:
+          type: "number"
+          format: "int64"
+          nullable: false
+        testName:
+          type: "string"
+          nullable: false
+        status:
+          type: "string"
+          nullable: false
