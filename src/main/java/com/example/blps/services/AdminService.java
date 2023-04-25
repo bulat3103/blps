@@ -70,21 +70,22 @@ public class AdminService {
 
     @Transactional
     public void changeTestStatus(Long statusId, ChangeStatusDTO changeStatusDTO) throws InvalidDataException, IOException {
-        if (Arrays.stream(Status.values()).noneMatch(e -> e.name().equals(changeStatusDTO.getStatus().toLowerCase()))) {
+        if (Arrays.stream(Status.values()).noneMatch(e -> e.name().equals(changeStatusDTO.getStatus()))) {
             throw new InvalidDataException("Такого типа статуса не существует (WAITING, APPROVE, REJECT)");
         }
         Optional<TestStatus> testStatusOptional = testStatusRepository.findById(statusId);
         if (!testStatusOptional.isPresent()) throw new InvalidDataException("Такой записи не существует");
         TestStatus testStatus = testStatusOptional.get();
+        if (!testStatus.getStatus().equals("WAITING")) throw new InvalidDataException("Этот тест уже был принят/отклонен");
+        CreateTestDTO createTestDTO = objectMapper.readValue(testStatus.getTestJson(), CreateTestDTO.class);
         if (changeStatusDTO.getStatus().equals("APPROVE")) {
-            CreateTestDTO createTestDTO = objectMapper.readValue(testStatus.getTestJson(), CreateTestDTO.class);
-            createTest(createTestDTO);
+            createTest(testStatus.getUserId(), createTestDTO);
         }
         testStatus.setStatus(changeStatusDTO.getStatus());
         testStatusRepository.save(testStatus);
         MailCredentials mailCredentials = new MailCredentials(
+                "Статус теста " + createTestDTO.getName() + " изменился на " + changeStatusDTO.getStatus(),
                 testStatus.getUserId().getEmail(),
-                changeStatusDTO.getStatus(),
                 changeStatusDTO.getMessage());
         try {
             messageSenderService.sendMessageToBroker(mailCredentials);
@@ -94,8 +95,8 @@ public class AdminService {
     }
 
     @Transactional
-    public void createTest(CreateTestDTO createTestDTO) {
-        Test newTest = testRepository.save(new Test(createTestDTO.getName(), 0));
+    public void createTest(User owner, CreateTestDTO createTestDTO) {
+        Test newTest = testRepository.save(new Test(createTestDTO.getName(), 0, owner));
         for (CreateTestResultDTO resultDTO : createTestDTO.getResults()) {
             testResultRepository.save(new TestResult(newTest, resultDTO.getLeftBound(), resultDTO.getRightBound(), resultDTO.getDescription()));
         }
@@ -123,7 +124,7 @@ public class AdminService {
     }
 
     public List<TestStatusDTO> getAllTestByStatus(String status) throws InvalidDataException {
-        if (Arrays.stream(Status.values()).noneMatch(e -> e.name().equals(status.toLowerCase()))) {
+        if (Arrays.stream(Status.values()).noneMatch(e -> e.name().equals(status))) {
             throw new InvalidDataException("Такого типа статуса не существует (WAITING, APPROVE, REJECT)");
         }
         return testStatusRepository.getAllByStatus(status).stream().map(TestStatusDTO::toDto).collect(Collectors.toList());
