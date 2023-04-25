@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MailCredentials {
-    private String email;
     private String subject;
+    private String emailTo;
     private String message;
 }

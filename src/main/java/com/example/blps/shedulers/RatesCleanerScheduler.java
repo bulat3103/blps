@@ -29,7 +29,9 @@ public class RatesCleanerScheduler {
         Map<Long, List<Rate>> groupRatesByTest = new HashMap<>();
         for (Rate rate : allRates) {
             if (!groupRatesByTest.containsKey(rate.getTestId().getId())) {
-                groupRatesByTest.put(rate.getTestId().getId(), Collections.singletonList(rate));
+                List<Rate> newList = new ArrayList<>();
+                newList.add(rate);
+                groupRatesByTest.put(rate.getTestId().getId(), newList);
             } else {
                 List<Rate> rates = groupRatesByTest.get(rate.getTestId().getId());
                 rates.add(rate);

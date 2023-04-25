@@ -76,6 +76,7 @@ public class AdminService {
         Optional<TestStatus> testStatusOptional = testStatusRepository.findById(statusId);
         if (!testStatusOptional.isPresent()) throw new InvalidDataException("Такой записи не существует");
         TestStatus testStatus = testStatusOptional.get();
+        if (!testStatus.getStatus().equals("WAITING")) throw new InvalidDataException("Этот тест уже был принят/отклонен");
         CreateTestDTO createTestDTO = objectMapper.readValue(testStatus.getTestJson(), CreateTestDTO.class);
         if (changeStatusDTO.getStatus().equals("APPROVE")) {
             createTest(testStatus.getUserId(), createTestDTO);
@@ -83,8 +84,8 @@ public class AdminService {
         testStatus.setStatus(changeStatusDTO.getStatus());
         testStatusRepository.save(testStatus);
         MailCredentials mailCredentials = new MailCredentials(
-                testStatus.getUserId().getEmail(),
                 "Статус теста " + createTestDTO.getName() + " изменился на " + changeStatusDTO.getStatus(),
+                testStatus.getUserId().getEmail(),
                 changeStatusDTO.getMessage());
         try {
             messageSenderService.sendMessageToBroker(mailCredentials);
