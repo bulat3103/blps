@@ -6,12 +6,12 @@ services:
     depends_on:
       - consul
     ports:
-      - 9093:9093
+      - 8888:8888
     environment:
       - spring_cloud_config_server_git_uri=https://github.com/bulat3103/blps-spring-cloud-config
       - SPRING_CLOUD_CONSUL_HOST=consul
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://config:9093" ]
+      test: [ "CMD", "curl", "-f", "http://config:8888" ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -34,7 +34,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=1234
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_CLOUD_CONSUL_HOST=consul
-      - SPRING_CONFIG_IMPORT=optional:config-server:http://config:9093/config
+      - SPRING_CONFIG_IMPORT=optional:config-server:http://config:8888/config
   mail:
     image: mail-image
     build: ./mail-service/
