@@ -1,0 +1,89 @@
+services:
+  config:
+    image: config-image
+    build: ./config-server/
+    container_name: config
+    depends_on:
+      - consul
+    ports:
+      - 9093:9093
+    environment:
+      - spring_cloud_config_server_git_uri=https://github.com/bulat3103/blps-spring-cloud-config
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://config:9093" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  app:
+    image: app-image
+    build: ./app/
+    container_name: app
+    depends_on:
+      - quiz
+      - config
+      - consul
+      - mail
+      - rabbit
+    ports:
+      - 9090:9090
+    restart: on-failure
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://quiz:5432/
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CONFIG_IMPORT=optional:config-server:http://config:9093/config
+  mail:
+    image: mail-image
+    build: ./mail-service/
+    container_name: mail
+    depends_on:
+      - quiz
+      - config
+      - consul
+      - rabbit
+    ports:
+      - 9091:9091
+    environment:
+      - SPRING_CLOUD_CONSUL_HOST=consul
+  gateway:
+    image: apigateway-image
+    build: ./apigateway/
+    container_name: gateway
+    depends_on:
+      - quiz
+      - consul
+      - rabbit
+    ports:
+      - 9092:9092
+    environment:
+      - SPRING_CLOUD_CONSUL_HOST=consul
+  quiz:
+    image: postgres:latest
+    container_name: quiz
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=quiz
+  consul:
+    image: consul
+    container_name: consul
+    ports:
+      - 8500:8500
+  rabbit:
+    image: heidiks/rabbitmq-delayed-message-exchange
+    container_name: rabbit
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=blps
+      - RABBITMQ_DEFAULT_PASS=rabbitfuck
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
