@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "label": "Status",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0dhtnr8",
+        "columns": null
+      },
+      "id": "Field_10e2zkk",
+      "key": "status"
+    }
+  ],
+  "type": "default",
+  "id": "adminStatuses",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

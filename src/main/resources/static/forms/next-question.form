@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "label": "TestId",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1bs6z5t",
+        "columns": null
+      },
+      "id": "Field_07l3jtr",
+      "key": "testId"
+    },
+    {
+      "label": "QuestionId",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0yj36h4",
+        "columns": null
+      },
+      "id": "Field_19b06wo",
+      "key": "qId"
+    }
+  ],
+  "type": "default",
+  "id": "nextQuestion",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

@@ -1,0 +1,43 @@
+{
+  "components": [
+    {
+      "label": "Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0v4rsio",
+        "columns": null
+      },
+      "id": "Field_0g7vf3u",
+      "key": "name"
+    },
+    {
+      "label": "Questions",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1uw5kws",
+        "columns": null
+      },
+      "id": "Field_136ymzk",
+      "key": "questions"
+    },
+    {
+      "label": "Results",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_11ly62t",
+        "columns": null
+      },
+      "id": "Field_1g6umzl",
+      "key": "results"
+    }
+  ],
+  "type": "default",
+  "id": "createTest",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

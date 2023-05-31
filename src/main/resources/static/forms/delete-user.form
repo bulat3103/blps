@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "label": "UserId",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0xwyalg",
+        "columns": null
+      },
+      "id": "Field_1op4rh5",
+      "key": "userId"
+    }
+  ],
+  "type": "default",
+  "id": "deleteUser",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

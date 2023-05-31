@@ -1,0 +1,44 @@
+{
+  "components": [
+    {
+      "label": "Page",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_06lim86",
+        "columns": null
+      },
+      "id": "Field_10lofn5",
+      "key": "page"
+    },
+    {
+      "label": "Size",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1o7j8ct",
+        "columns": null
+      },
+      "id": "Field_0ddhrpi",
+      "key": "size"
+    },
+    {
+      "label": "Sort",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0w7g7py",
+        "columns": null
+      },
+      "id": "Field_0j33eqx",
+      "key": "sort",
+      "defaultValue": "ASC"
+    }
+  ],
+  "type": "default",
+  "id": "allTests",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

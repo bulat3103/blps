@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "label": "TestId",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0rcf8oc",
+        "columns": null
+      },
+      "id": "Field_0hrn0ip",
+      "key": "testId"
+    },
+    {
+      "label": "Answers array",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0av1c11",
+        "columns": null
+      },
+      "id": "Field_0w2wxml",
+      "key": "answers"
+    }
+  ],
+  "type": "default",
+  "id": "submitTest",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

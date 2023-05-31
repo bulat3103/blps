@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "label": "TestId",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_15shu4n",
+        "columns": null
+      },
+      "id": "Field_049gqds",
+      "key": "testId"
+    },
+    {
+      "label": "Comment",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1qsucek",
+        "columns": null
+      },
+      "id": "Field_0kprc0t",
+      "key": "comment"
+    }
+  ],
+  "type": "default",
+  "id": "addComment",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

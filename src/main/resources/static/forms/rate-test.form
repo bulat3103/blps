@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "label": "TestId",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0mhai9q",
+        "columns": null
+      },
+      "id": "Field_142bepz",
+      "key": "testId"
+    },
+    {
+      "label": "Rate",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0rmdrog",
+        "columns": null
+      },
+      "id": "Field_0ha0pke",
+      "key": "rate"
+    }
+  ],
+  "type": "default",
+  "id": "rateTest",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}

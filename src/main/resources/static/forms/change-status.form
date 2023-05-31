@@ -1,0 +1,43 @@
+{
+  "components": [
+    {
+      "label": "StatusId",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0d30jm3",
+        "columns": null
+      },
+      "id": "Field_1ateaju",
+      "key": "statusId"
+    },
+    {
+      "label": "Status",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1cr18qq",
+        "columns": null
+      },
+      "id": "Field_0xvab3k",
+      "key": "status"
+    },
+    {
+      "label": "Message",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_07k86k3",
+        "columns": null
+      },
+      "id": "Field_14dwmbe",
+      "key": "statusMessage"
+    }
+  ],
+  "type": "default",
+  "id": "changeStatus",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "schemaVersion": 8
+}
