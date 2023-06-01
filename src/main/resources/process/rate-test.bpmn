@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ydgh4i" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:collaboration id="Collaboration_0nfmnbm">
+    <bpmn:participant id="Participant_0kieg4w" name="Оценка теста" processRef="Process_11t5alu" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_11t5alu" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_03q4y68">
+      <bpmn:lane id="Lane_1f68j5u">
+        <bpmn:flowNodeRef>Activity_1pyqv39</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_01ikvnr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1l1wwmm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0mm83yr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_176kvk0">
+        <bpmn:flowNodeRef>Activity_1332x3y</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1bwmdew</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0vkkyqv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0y9lbnm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1mwnaya</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0p1stzg</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1" name="Переход на главную страницу">
+      <bpmn:outgoing>Flow_1gah05s</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Activity_1pyqv39" name="Ввод данных для авторизации">
+      <bpmn:incoming>Flow_1gah05s</bpmn:incoming>
+      <bpmn:outgoing>Flow_0asvh2t</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1gah05s" sourceRef="StartEvent_1" targetRef="Activity_1pyqv39" />
+    <bpmn:serviceTask id="Activity_1332x3y" name="Авторизация">
+      <bpmn:incoming>Flow_0asvh2t</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yz807a</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_0vkkyqv" attachedToRef="Activity_1332x3y">
+      <bpmn:outgoing>Flow_086z3cg</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1exlohh" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_086z3cg" sourceRef="Event_0vkkyqv" targetRef="Event_1mwnaya" />
+    <bpmn:endEvent id="Event_1mwnaya" name="Ошибка авторизации">
+      <bpmn:incoming>Flow_086z3cg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0asvh2t" sourceRef="Activity_1pyqv39" targetRef="Activity_1332x3y" />
+    <bpmn:userTask id="Activity_01ikvnr" name="Ввод данных для оценки теста">
+      <bpmn:incoming>Flow_0yz807a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1flsjv6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0yz807a" sourceRef="Activity_1332x3y" targetRef="Activity_01ikvnr" />
+    <bpmn:serviceTask id="Activity_1bwmdew" name="Валидация данных и сохранение оценки">
+      <bpmn:incoming>Flow_1flsjv6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v4m55c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_0y9lbnm" attachedToRef="Activity_1bwmdew">
+      <bpmn:outgoing>Flow_1qm2gkq</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_07owxui" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1qm2gkq" sourceRef="Event_0y9lbnm" targetRef="Event_0p1stzg" />
+    <bpmn:endEvent id="Event_0p1stzg" name="Данные не валидны">
+      <bpmn:incoming>Flow_1qm2gkq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1flsjv6" sourceRef="Activity_01ikvnr" targetRef="Activity_1bwmdew" />
+    <bpmn:userTask id="Activity_1l1wwmm" name="Получение ответа от сервера">
+      <bpmn:incoming>Flow_1v4m55c</bpmn:incoming>
+      <bpmn:outgoing>Flow_01tg9ou</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1v4m55c" sourceRef="Activity_1bwmdew" targetRef="Activity_1l1wwmm" />
+    <bpmn:endEvent id="Event_0mm83yr" name="Оценка сохранена">
+      <bpmn:incoming>Flow_01tg9ou</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_01tg9ou" sourceRef="Activity_1l1wwmm" targetRef="Event_0mm83yr" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0nfmnbm">
+      <bpmndi:BPMNShape id="Participant_0kieg4w_di" bpmnElement="Participant_0kieg4w" isHorizontal="true">
+        <dc:Bounds x="129" y="120" width="731" height="390" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1f68j5u_di" bpmnElement="Lane_1f68j5u" isHorizontal="true">
+        <dc:Bounds x="159" y="120" width="701" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_176kvk0_di" bpmnElement="Lane_176kvk0" isHorizontal="true">
+        <dc:Bounds x="159" y="290" width="701" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="167" y="225" width="60" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pyqv39_di" bpmnElement="Activity_1pyqv39">
+        <dc:Bounds x="270" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1332x3y_di" bpmnElement="Activity_1332x3y">
+        <dc:Bounds x="270" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mwnaya_di" bpmnElement="Event_1mwnaya">
+        <dc:Bounds x="372" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="357" y="475" width="66" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01ikvnr_di" bpmnElement="Activity_01ikvnr">
+        <dc:Bounds x="440" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bwmdew_di" bpmnElement="Activity_1bwmdew">
+        <dc:Bounds x="440" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0p1stzg_di" bpmnElement="Event_0p1stzg">
+        <dc:Bounds x="542" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="533" y="475" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1l1wwmm_di" bpmnElement="Activity_1l1wwmm">
+        <dc:Bounds x="610" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mm83yr_di" bpmnElement="Event_0mm83yr">
+        <dc:Bounds x="782" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="773" y="225" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vkkyqv_di" bpmnElement="Event_0vkkyqv">
+        <dc:Bounds x="322" y="392" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0y9lbnm_di" bpmnElement="Event_0y9lbnm">
+        <dc:Bounds x="492" y="392" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1gah05s_di" bpmnElement="Flow_1gah05s">
+        <di:waypoint x="215" y="200" />
+        <di:waypoint x="270" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_086z3cg_di" bpmnElement="Flow_086z3cg">
+        <di:waypoint x="340" y="428" />
+        <di:waypoint x="340" y="450" />
+        <di:waypoint x="372" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0asvh2t_di" bpmnElement="Flow_0asvh2t">
+        <di:waypoint x="320" y="240" />
+        <di:waypoint x="320" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yz807a_di" bpmnElement="Flow_0yz807a">
+        <di:waypoint x="370" y="370" />
+        <di:waypoint x="405" y="370" />
+        <di:waypoint x="405" y="200" />
+        <di:waypoint x="440" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qm2gkq_di" bpmnElement="Flow_1qm2gkq">
+        <di:waypoint x="510" y="428" />
+        <di:waypoint x="510" y="450" />
+        <di:waypoint x="542" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1flsjv6_di" bpmnElement="Flow_1flsjv6">
+        <di:waypoint x="490" y="240" />
+        <di:waypoint x="490" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v4m55c_di" bpmnElement="Flow_1v4m55c">
+        <di:waypoint x="540" y="370" />
+        <di:waypoint x="575" y="370" />
+        <di:waypoint x="575" y="200" />
+        <di:waypoint x="610" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01tg9ou_di" bpmnElement="Flow_01tg9ou">
+        <di:waypoint x="710" y="200" />
+        <di:waypoint x="782" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
