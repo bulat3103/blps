@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0ld5pbi" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
-  <bpmn:process id="Process_0x9u1wp" isExecutable="true">
-    <bpmn:startEvent id="Event_02eu1yn">
-      <bpmn:outgoing>Flow_0y44jxo</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_0s0t84x" />
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_08gzx1l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+  <bpmn:process id="Process_0xou5e1" isExecutable="true">
+    <bpmn:startEvent id="Event_1pc2nf9">
+      <bpmn:outgoing>Flow_1qk50yn</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1sf5by8" />
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Activity_0eudmap" name="Удаление устаревших оценок">
-      <bpmn:incoming>Flow_0y44jxo</bpmn:incoming>
-      <bpmn:outgoing>Flow_040aeko</bpmn:outgoing>
+    <bpmn:serviceTask id="Activity_1ydxdab" name="Удаление устаревших оценок" camunda:delegateExpression="#{ratesCleanerDelegate}">
+      <bpmn:incoming>Flow_1qk50yn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c5elsc</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_0y44jxo" sourceRef="Event_02eu1yn" targetRef="Activity_0eudmap" />
-    <bpmn:endEvent id="Event_0uf1tg5" name="Оценки удалены">
-      <bpmn:incoming>Flow_040aeko</bpmn:incoming>
+    <bpmn:sequenceFlow id="Flow_1qk50yn" sourceRef="Event_1pc2nf9" targetRef="Activity_1ydxdab" />
+    <bpmn:endEvent id="Event_1pve8zq" name="Пользователь удален">
+      <bpmn:incoming>Flow_0c5elsc</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_040aeko" sourceRef="Activity_0eudmap" targetRef="Event_0uf1tg5" />
+    <bpmn:sequenceFlow id="Flow_0c5elsc" sourceRef="Activity_1ydxdab" targetRef="Event_1pve8zq" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0x9u1wp">
-      <bpmndi:BPMNShape id="Event_02eu1yn_di" bpmnElement="Event_02eu1yn">
-        <dc:Bounds x="182" y="102" width="36" height="36" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0xou5e1">
+      <bpmndi:BPMNShape id="Event_1pc2nf9_di" bpmnElement="Event_1pc2nf9">
+        <dc:Bounds x="182" y="132" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0eudmap_di" bpmnElement="Activity_0eudmap">
-        <dc:Bounds x="300" y="80" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1ydxdab_di" bpmnElement="Activity_1ydxdab">
+        <dc:Bounds x="330" y="110" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0uf1tg5_di" bpmnElement="Event_0uf1tg5">
-        <dc:Bounds x="482" y="102" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_1pve8zq_di" bpmnElement="Event_1pve8zq">
+        <dc:Bounds x="542" y="132" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="457" y="145" width="86" height="14" />
+          <dc:Bounds x="524" y="175" width="73" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0y44jxo_di" bpmnElement="Flow_0y44jxo">
-        <di:waypoint x="218" y="120" />
-        <di:waypoint x="300" y="120" />
+      <bpmndi:BPMNEdge id="Flow_1qk50yn_di" bpmnElement="Flow_1qk50yn">
+        <di:waypoint x="218" y="150" />
+        <di:waypoint x="330" y="150" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_040aeko_di" bpmnElement="Flow_040aeko">
-        <di:waypoint x="400" y="120" />
-        <di:waypoint x="482" y="120" />
+      <bpmndi:BPMNEdge id="Flow_0c5elsc_di" bpmnElement="Flow_0c5elsc">
+        <di:waypoint x="430" y="150" />
+        <di:waypoint x="542" y="150" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
