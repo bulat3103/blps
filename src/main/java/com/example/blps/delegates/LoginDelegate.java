@@ -3,7 +3,7 @@ package com.example.blps.delegates;
 import com.example.blps.model.User;
 import com.example.blps.model.dto.LoginRequestDTO;
 import com.example.blps.security.JwtUtil;
-import com.example.blps.services.AuthorizationService;
+import com.example.blps.services.AuthService;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -18,11 +18,11 @@ import java.util.logging.Logger;
 public class LoginDelegate implements JavaDelegate {
     private static final Logger logger = Logger.getLogger(LoginDelegate.class.getName());
     private final JwtUtil jwtUtil;
-    private final AuthorizationService authorizationService;
+    private final AuthService authService;
 
-    public LoginDelegate(JwtUtil jwtUtil, AuthorizationService authorizationService) {
+    public LoginDelegate(JwtUtil jwtUtil, AuthService authService) {
         this.jwtUtil = jwtUtil;
-        this.authorizationService = authorizationService;
+        this.authService = authService;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class LoginDelegate implements JavaDelegate {
         try {
             String username = (String) delegateExecution.getVariable("username");
             String password = (String) delegateExecution.getVariable("password");
-            User user = authorizationService.authUser(new LoginRequestDTO(username, password));
+            User user = authService.authUser(new LoginRequestDTO(username, password));
             String token = jwtUtil.generateToken(user.getEmail());
             delegateExecution.setVariable("token", token);
             logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());

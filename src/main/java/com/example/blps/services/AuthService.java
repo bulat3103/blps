@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthorizationService {
+public class AuthService {
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -25,7 +25,7 @@ public class AuthorizationService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthorizationService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
