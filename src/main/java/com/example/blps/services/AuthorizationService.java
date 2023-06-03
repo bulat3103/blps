@@ -3,14 +3,12 @@ package com.example.blps.services;
 import com.example.blps.exceptions.AuthorizeException;
 import com.example.blps.exceptions.InvalidDataException;
 import com.example.blps.exceptions.NoSuchUserException;
-import com.example.blps.model.Role;
 import com.example.blps.model.User;
 import com.example.blps.model.dto.LoginRequestDTO;
 import com.example.blps.model.dto.RegisterRequestDTO;
 import com.example.blps.model.enums.RoleName;
 import com.example.blps.repositories.RoleRepository;
 import com.example.blps.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,17 +17,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorizationService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public AuthorizationService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+    }
 
     public User authUser(LoginRequestDTO loginRequestDTO) throws NoSuchUserException, AuthorizeException {
         Authentication authentication = authenticationManager.authenticate(
