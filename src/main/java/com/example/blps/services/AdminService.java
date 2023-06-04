@@ -69,7 +69,7 @@ public class AdminService {
     }
 
     @Transactional
-    public void changeTestStatus(Long statusId, ChangeStatusDTO changeStatusDTO) throws InvalidDataException, IOException {
+    public MailCredentials changeTestStatus(Long statusId, ChangeStatusDTO changeStatusDTO) throws InvalidDataException, IOException {
         if (Arrays.stream(Status.values()).noneMatch(e -> e.name().equals(changeStatusDTO.getStatus()))) {
             throw new InvalidDataException("Такого типа статуса не существует (WAITING, APPROVE, REJECT)");
         }
@@ -83,15 +83,10 @@ public class AdminService {
         }
         testStatus.setStatus(changeStatusDTO.getStatus());
         testStatusRepository.save(testStatus);
-        MailCredentials mailCredentials = new MailCredentials(
+        return new MailCredentials(
                 "Статус теста " + createTestDTO.getName() + " изменился на " + changeStatusDTO.getStatus(),
                 testStatus.getUserId().getEmail(),
                 changeStatusDTO.getMessage());
-        try {
-            messageSenderService.sendMessageToBroker(mailCredentials);
-        } catch (Exception e) {
-            System.out.println("Возникла ошибка отправки пакета брокеру");
-        }
     }
 
     @Transactional

@@ -40,15 +40,10 @@
       <bpmn:incoming>Flow_0o0bt6c</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0o0bt6c" sourceRef="Event_1wsu0kd" targetRef="Event_10bg3nt" />
-    <bpmn:userTask id="Activity_15rc5m0" name="Получить ответ от сервера">
-      <bpmn:incoming>Flow_0mws9hd</bpmn:incoming>
-      <bpmn:outgoing>Flow_1vju02e</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0mws9hd" sourceRef="Activity_1rlyp7t" targetRef="Activity_15rc5m0" />
+    <bpmn:sequenceFlow id="Flow_0mws9hd" sourceRef="Activity_1rlyp7t" targetRef="Event_0uzt8iy" />
     <bpmn:endEvent id="Event_0uzt8iy" name="Комментарий создан">
-      <bpmn:incoming>Flow_1vju02e</bpmn:incoming>
+      <bpmn:incoming>Flow_0mws9hd</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1vju02e" sourceRef="Activity_15rc5m0" targetRef="Event_0uzt8iy" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_03gxsxp">
@@ -85,10 +80,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="853" y="105" width="55" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15rc5m0_di" bpmnElement="Activity_15rc5m0">
-        <dc:Bounds x="910" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0uzt8iy_di" bpmnElement="Event_0uzt8iy">
         <dc:Bounds x="1072" y="159" width="36" height="36" />
@@ -130,10 +121,6 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mws9hd_di" bpmnElement="Flow_0mws9hd">
         <di:waypoint x="850" y="177" />
-        <di:waypoint x="910" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1vju02e_di" bpmnElement="Flow_1vju02e">
-        <di:waypoint x="1010" y="177" />
         <di:waypoint x="1072" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

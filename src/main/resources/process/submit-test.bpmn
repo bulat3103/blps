@@ -9,7 +9,6 @@
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0kw6egs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rk56sf</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_17unrvq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ckwcwd</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0jnfk0q">
@@ -46,12 +45,8 @@
     <bpmn:endEvent id="Event_05mllpv" name="Данные не валидны">
       <bpmn:incoming>Flow_097nw13</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_17unrvq" name="Получение ответа от сервера">
-      <bpmn:incoming>Flow_113e53o</bpmn:incoming>
-      <bpmn:outgoing>Flow_1r6g7f4</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:endEvent id="Event_1ckwcwd" name="Тест пройден">
-      <bpmn:incoming>Flow_1r6g7f4</bpmn:incoming>
+      <bpmn:incoming>Flow_113e53o</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:boundaryEvent id="Event_0t16ogw" attachedToRef="Activity_01slpig">
       <bpmn:outgoing>Flow_1wj4cwl</bpmn:outgoing>
@@ -66,9 +61,8 @@
     <bpmn:sequenceFlow id="Flow_0rnbx61" sourceRef="Activity_01slpig" targetRef="Activity_0rk56sf" />
     <bpmn:sequenceFlow id="Flow_1wj4cwl" sourceRef="Event_0t16ogw" targetRef="Event_0drnh0j" />
     <bpmn:sequenceFlow id="Flow_0eb1enr" sourceRef="Activity_0rk56sf" targetRef="Activity_180lcjy" />
-    <bpmn:sequenceFlow id="Flow_113e53o" sourceRef="Activity_180lcjy" targetRef="Activity_17unrvq" />
+    <bpmn:sequenceFlow id="Flow_113e53o" sourceRef="Activity_180lcjy" targetRef="Event_1ckwcwd" />
     <bpmn:sequenceFlow id="Flow_097nw13" sourceRef="Event_16maqkz" targetRef="Event_05mllpv" />
-    <bpmn:sequenceFlow id="Flow_1r6g7f4" sourceRef="Activity_17unrvq" targetRef="Event_1ckwcwd" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0zgq6dc">
@@ -116,10 +110,6 @@
           <dc:Bounds x="553" y="445" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17unrvq_di" bpmnElement="Activity_17unrvq">
-        <dc:Bounds x="630" y="120" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1ckwcwd_di" bpmnElement="Event_1ckwcwd">
         <dc:Bounds x="802" y="142" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -157,18 +147,14 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_113e53o_di" bpmnElement="Flow_113e53o">
         <di:waypoint x="560" y="340" />
-        <di:waypoint x="590" y="340" />
-        <di:waypoint x="590" y="160" />
-        <di:waypoint x="630" y="160" />
+        <di:waypoint x="681" y="340" />
+        <di:waypoint x="681" y="160" />
+        <di:waypoint x="802" y="160" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_097nw13_di" bpmnElement="Flow_097nw13">
         <di:waypoint x="530" y="398" />
         <di:waypoint x="530" y="420" />
         <di:waypoint x="562" y="420" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1r6g7f4_di" bpmnElement="Flow_1r6g7f4">
-        <di:waypoint x="730" y="160" />
-        <di:waypoint x="802" y="160" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

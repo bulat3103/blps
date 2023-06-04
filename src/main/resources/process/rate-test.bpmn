@@ -9,7 +9,6 @@
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0tuf0vd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0876wba</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1trxpiy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_126k64m</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0evjvu3">
@@ -46,12 +45,8 @@
     <bpmn:endEvent id="Event_1mo44dt" name="Данные не валидны">
       <bpmn:incoming>Flow_0xia6c9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_1trxpiy" name="Получение ответа от сервера">
-      <bpmn:incoming>Flow_0bggdsd</bpmn:incoming>
-      <bpmn:outgoing>Flow_0vxbg4o</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:endEvent id="Event_126k64m" name="Оценка сохранена">
-      <bpmn:incoming>Flow_0vxbg4o</bpmn:incoming>
+      <bpmn:incoming>Flow_0bggdsd</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:boundaryEvent id="Event_1223qch" attachedToRef="Activity_0maduw6">
       <bpmn:outgoing>Flow_1fqpyzs</bpmn:outgoing>
@@ -66,9 +61,8 @@
     <bpmn:sequenceFlow id="Flow_1iz758c" sourceRef="Activity_0maduw6" targetRef="Activity_0876wba" />
     <bpmn:sequenceFlow id="Flow_1fqpyzs" sourceRef="Event_1223qch" targetRef="Event_0g4la5p" />
     <bpmn:sequenceFlow id="Flow_1bno1kc" sourceRef="Activity_0876wba" targetRef="Activity_0ed3x2l" />
-    <bpmn:sequenceFlow id="Flow_0bggdsd" sourceRef="Activity_0ed3x2l" targetRef="Activity_1trxpiy" />
+    <bpmn:sequenceFlow id="Flow_0bggdsd" sourceRef="Activity_0ed3x2l" targetRef="Event_126k64m" />
     <bpmn:sequenceFlow id="Flow_0xia6c9" sourceRef="Event_11be33b" targetRef="Event_1mo44dt" />
-    <bpmn:sequenceFlow id="Flow_0vxbg4o" sourceRef="Activity_1trxpiy" targetRef="Event_126k64m" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_17tjune">
@@ -116,10 +110,6 @@
           <dc:Bounds x="553" y="455" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1trxpiy_di" bpmnElement="Activity_1trxpiy">
-        <dc:Bounds x="610" y="120" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_126k64m_di" bpmnElement="Event_126k64m">
         <dc:Bounds x="772" y="142" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -157,18 +147,14 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bggdsd_di" bpmnElement="Flow_0bggdsd">
         <di:waypoint x="550" y="350" />
-        <di:waypoint x="580" y="350" />
-        <di:waypoint x="580" y="160" />
-        <di:waypoint x="610" y="160" />
+        <di:waypoint x="661" y="350" />
+        <di:waypoint x="661" y="160" />
+        <di:waypoint x="772" y="160" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0xia6c9_di" bpmnElement="Flow_0xia6c9">
         <di:waypoint x="520" y="408" />
         <di:waypoint x="520" y="430" />
         <di:waypoint x="562" y="430" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0vxbg4o_di" bpmnElement="Flow_0vxbg4o">
-        <di:waypoint x="710" y="160" />
-        <di:waypoint x="772" y="160" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

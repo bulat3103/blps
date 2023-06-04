@@ -9,7 +9,6 @@
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1etg1oj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_00i223g</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_00xj8pw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1fwy5jz</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0t2dhbw">
@@ -60,15 +59,10 @@
     <bpmn:endEvent id="Event_1ff5qm0" name="Данные не валидны">
       <bpmn:incoming>Flow_1o1o175</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_00xj8pw" name="Получение ответа от сервера">
-      <bpmn:incoming>Flow_1ool5wp</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ogl6n6</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1ool5wp" sourceRef="Activity_0702t74" targetRef="Activity_00xj8pw" />
+    <bpmn:sequenceFlow id="Flow_1ool5wp" sourceRef="Activity_0702t74" targetRef="Event_1fwy5jz" />
     <bpmn:endEvent id="Event_1fwy5jz" name="Тест сохранен">
-      <bpmn:incoming>Flow_1ogl6n6</bpmn:incoming>
+      <bpmn:incoming>Flow_1ool5wp</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1ogl6n6" sourceRef="Activity_00xj8pw" targetRef="Event_1fwy5jz" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1ri9sfz">
@@ -116,10 +110,6 @@
           <dc:Bounds x="553" y="475" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_00xj8pw_di" bpmnElement="Activity_00xj8pw">
-        <dc:Bounds x="620" y="150" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1fwy5jz_di" bpmnElement="Event_1fwy5jz">
         <dc:Bounds x="792" y="172" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -162,12 +152,8 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ool5wp_di" bpmnElement="Flow_1ool5wp">
         <di:waypoint x="550" y="370" />
-        <di:waypoint x="585" y="370" />
-        <di:waypoint x="585" y="190" />
-        <di:waypoint x="620" y="190" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ogl6n6_di" bpmnElement="Flow_1ogl6n6">
-        <di:waypoint x="720" y="190" />
+        <di:waypoint x="671" y="370" />
+        <di:waypoint x="671" y="190" />
         <di:waypoint x="792" y="190" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

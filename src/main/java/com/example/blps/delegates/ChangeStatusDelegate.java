@@ -1,5 +1,6 @@
 package com.example.blps.delegates;
 
+import com.example.blps.model.MailCredentials;
 import com.example.blps.model.dto.ChangeStatusDTO;
 import com.example.blps.security.JwtUtil;
 import com.example.blps.services.AdminService;
@@ -29,7 +30,10 @@ public class ChangeStatusDelegate implements JavaDelegate {
             long statusId = (long) delegateExecution.getVariable("statusId");
             String status = (String) delegateExecution.getVariable("status");
             String message = (String) delegateExecution.getVariable("statusMessage");
-            adminService.changeTestStatus(statusId, new ChangeStatusDTO(status, message));
+            MailCredentials mailCredentials = adminService.changeTestStatus(statusId, new ChangeStatusDTO(status, message));
+            delegateExecution.setVariable("email-subject", mailCredentials.getSubject());
+            delegateExecution.setVariable("email-address", mailCredentials.getEmailTo());
+            delegateExecution.setVariable("email-message", mailCredentials.getMessage());
             logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "Status with id = " + statusId + " was successfully changed on " + status);
         } catch (Throwable throwable) {

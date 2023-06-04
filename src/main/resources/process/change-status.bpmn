@@ -38,7 +38,7 @@
     </bpmn:userTask>
     <bpmn:endEvent id="Event_0gams8o" name="Запрос на отправку сообщения отправлен">
       <bpmn:incoming>Flow_0zclk16</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0puici5" camunda:delegateExpression="#{sendEmailDelegate}" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0puici5" messageRef="Message_1ferot1" camunda:delegateExpression="#{sendEmailDelegate}" />
     </bpmn:endEvent>
     <bpmn:transaction id="Activity_004523t">
       <bpmn:incoming>Flow_0qkdug8</bpmn:incoming>
@@ -62,6 +62,7 @@
     <bpmn:sequenceFlow id="Flow_0qkdug8" sourceRef="Activity_0nzdm4e" targetRef="Activity_004523t" />
     <bpmn:sequenceFlow id="Flow_0zclk16" sourceRef="Activity_004523t" targetRef="Event_0gams8o" />
   </bpmn:process>
+  <bpmn:message id="Message_1ferot1" name="mail-send-request" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1nvz5se">
       <bpmndi:BPMNShape id="Participant_1dppmhl_di" bpmnElement="Participant_1dppmhl" isHorizontal="true">
