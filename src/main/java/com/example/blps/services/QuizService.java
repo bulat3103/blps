@@ -93,27 +93,27 @@ public class QuizService {
         return comment.getId();
     }
 
-    public String submitTest(TestAnswersDTO testAnswersDTO) throws NoSuchTestException, InvalidDataException {
-        Optional<Test> oTest = testRepository.findById(testAnswersDTO.getTestId());
+    public String submitTest(long testId, TestAnswersDTO testAnswersDTO) throws NoSuchTestException, InvalidDataException {
+        Optional<Test> oTest = testRepository.findById(testId);
         if (oTest.isEmpty()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
-        Integer count = testQuestionRepository.countByTestId(testAnswersDTO.getTestId());
+        Integer count = testQuestionRepository.countByTestId(testId);
         Map<Integer, Integer> answers = testAnswersDTO.getAnswers();
         int testRate = 0;
         for (Map.Entry<Integer, Integer> entry : answers.entrySet()) {
             if (entry.getKey() > count || entry.getKey() <= 0) {
                 throw new InvalidDataException("Вопроса под таким номером не существует");
             }
-            Long qId = testQuestionRepository.getByTestIdAndNumber(testAnswersDTO.getTestId(), entry.getKey());
+            Long qId = testQuestionRepository.getByTestIdAndNumber(testId, entry.getKey());
             testRate += answerRepository.getRateByQuestionAndAnsNum(qId, entry.getValue());
         }
-        return testResultRepository.getDescByTestAndBounds(testAnswersDTO.getTestId(), testRate);
+        return testResultRepository.getDescByTestAndBounds(testId, testRate);
     }
 
     public Integer getTestQuestionsCount(Long testId) throws NoSuchTestException {
         Optional<Test> oTest = testRepository.findById(testId);
-        if (!oTest.isPresent()) {
+        if (oTest.isEmpty()) {
             throw new NoSuchTestException("Теста с таким id не существует");
         }
         return testQuestionRepository.countByTestId(testId);

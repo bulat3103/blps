@@ -40,7 +40,7 @@
       <bpmn:incoming>Flow_1w33ezq</bpmn:incoming>
       <bpmn:outgoing>Flow_0vywuie</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_198ak26" name="Заполнить форму авторизации" camunda:formKey="camunda-forms:/forms/auth.form">
+    <bpmn:userTask id="Activity_198ak26" name="Заполнить форму авторизации" camunda:formKey="camunda-forms:/forms/login.form">
       <bpmn:incoming>Flow_0vywuie</bpmn:incoming>
       <bpmn:outgoing>Flow_1vwosdg</bpmn:outgoing>
     </bpmn:userTask>
@@ -57,10 +57,10 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1umr2pu" sourceRef="StartEvent_1" targetRef="Gateway_0pok7qs" />
     <bpmn:sequenceFlow id="Flow_1kskw12" name="Нет" sourceRef="Gateway_0pok7qs" targetRef="Activity_1v9xu3z">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${is-register == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isRegister == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1w33ezq" name="Да" sourceRef="Gateway_0pok7qs" targetRef="Gateway_0zll310">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${is-register == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isRegister == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_01mwngo" sourceRef="Activity_1v9xu3z" targetRef="Activity_0iz07ea" />
     <bpmn:sequenceFlow id="Flow_0sb29ir" sourceRef="Activity_0iz07ea" targetRef="Gateway_0zll310" />

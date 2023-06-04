@@ -35,6 +35,7 @@ public class LoginDelegate implements JavaDelegate {
             delegateExecution.setVariable("token", token);
             logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "User with email " + username + " is successfully signed in");
+            logger.log(Level.INFO, "Generated token is " + token);
         } catch (Throwable throwable) {
             throw new BpmnError("login_error", throwable.getMessage());
         }

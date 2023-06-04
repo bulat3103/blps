@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "label": "Хотите зарегистрироваться?",
+      "label": "Есть аккаунт?",
       "type": "checkbox",
       "layout": {
         "row": "Row_0vg3zq7",
