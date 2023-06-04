@@ -1,8 +1,6 @@
 package com.example.blps.delegates;
 
-import com.example.blps.model.dto.TestAnswersDTO;
 import com.example.blps.shedulers.RatesCleanerScheduler;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;

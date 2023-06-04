@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0mts0ig" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
-  <bpmn:process id="Process_03gxsxp" isExecutable="true" camunda:historyTimeToLive="3000">
+  <bpmn:process id="Process_03gxsxp" name="WriteComment" isExecutable="true" camunda:historyTimeToLive="3000">
     <bpmn:startEvent id="StartEvent_1" name="Переход на главную страницу">
       <bpmn:outgoing>Flow_1ack6a2</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_1rqtqq3" name="Ввод данных для авторизации клиента" camunda:formKey="camunda-forms:/forms/auth.form">
+    <bpmn:userTask id="Activity_1rqtqq3" name="Ввод данных для авторизации клиента" camunda:formKey="camunda-forms:/forms/login.form">
       <bpmn:incoming>Flow_1ack6a2</bpmn:incoming>
       <bpmn:outgoing>Flow_10cquin</bpmn:outgoing>
     </bpmn:userTask>

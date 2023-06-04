@@ -32,6 +32,7 @@ public class RateTestDelegate implements JavaDelegate {
             int rateInt = Integer.parseInt(rate);
             String username = jwtUtil.usernameFromToken((String) delegateExecution.getVariable("token"));
             quizService.rateTest(testId, rateInt, username);
+            logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "Test with id=" + testId + " was successfully rated");
         } catch (Throwable throwable) {
             throw new BpmnError("rate-test-error", throwable.getMessage());

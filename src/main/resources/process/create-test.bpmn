@@ -3,7 +3,7 @@
   <bpmn:collaboration id="Collaboration_1ri9sfz">
     <bpmn:participant id="Participant_1j46mgl" name="Создание теста" processRef="Process_0nt8sgk" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_0nt8sgk" isExecutable="true" camunda:historyTimeToLive="3000">
+  <bpmn:process id="Process_0nt8sgk" name="CreateTest" isExecutable="true" camunda:historyTimeToLive="3000">
     <bpmn:laneSet id="LaneSet_11me4tk">
       <bpmn:lane id="Lane_1x120y3">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -24,7 +24,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Переход на главную страницу">
       <bpmn:outgoing>Flow_09e7koc</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_1etg1oj" name="Ввод данных для авторизации" camunda:formKey="camunda-forms:/forms/auth.form">
+    <bpmn:userTask id="Activity_1etg1oj" name="Ввод данных для авторизации" camunda:formKey="camunda-forms:/forms/login.form">
       <bpmn:incoming>Flow_09e7koc</bpmn:incoming>
       <bpmn:outgoing>Flow_04fs8b3</bpmn:outgoing>
     </bpmn:userTask>

@@ -31,6 +31,7 @@ public class SubmitTestDelegate implements JavaDelegate {
             ObjectMapper mapper = new ObjectMapper();
             TestAnswersDTO testAnswersDTO = mapper.readValue(jsonAnswers, TestAnswersDTO.class);
             String result = quizService.submitTest(testId, testAnswersDTO);
+            logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "Result for the test with id = " + testId + " is " + result);
         } catch (Throwable throwable) {
             throw new BpmnError("submit-test-error", throwable.getMessage());

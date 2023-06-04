@@ -45,6 +45,7 @@ public class CreateTestDelegate implements JavaDelegate {
                     createQuestionDTO,
                     createTestResultDTO
             ));
+            logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "Test was successfully created");
         } catch (Throwable throwable) {
             throw new BpmnError("create-test-error", throwable.getMessage());

@@ -26,6 +26,7 @@ public class DeleteTestDelegate implements JavaDelegate {
         try {
             long testId = (long) delegateExecution.getVariable("testId");
             adminService.deleteTest(testId);
+            logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "Test with id=" + testId + " is successfully deleted");
         } catch (Throwable throwable) {
             throw new BpmnError("delete_test_error", throwable.getMessage());

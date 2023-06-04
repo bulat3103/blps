@@ -3,7 +3,7 @@
   <bpmn:collaboration id="Collaboration_1nvz5se">
     <bpmn:participant id="Participant_1dppmhl" name="Изменить статус теста" processRef="Process_0y2nf3w" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_0y2nf3w" isExecutable="true" camunda:historyTimeToLive="3000">
+  <bpmn:process id="Process_0y2nf3w" name="ChangeStatus" isExecutable="true" camunda:historyTimeToLive="3000">
     <bpmn:laneSet id="LaneSet_1kyla3q">
       <bpmn:lane id="Lane_0cs8enp">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -21,7 +21,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Переход на главную страницу">
       <bpmn:outgoing>Flow_1b51bvi</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_064yevt" name="Ввод данных для авторизации" camunda:formKey="camunda-forms:/forms/auth.form">
+    <bpmn:userTask id="Activity_064yevt" name="Ввод данных для авторизации" camunda:formKey="camunda-forms:/forms/login.form">
       <bpmn:incoming>Flow_1b51bvi</bpmn:incoming>
       <bpmn:outgoing>Flow_06a379d</bpmn:outgoing>
     </bpmn:userTask>
@@ -68,11 +68,11 @@
         <dc:Bounds x="160" y="100" width="920" height="390" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0cs8enp_di" bpmnElement="Lane_0cs8enp" isHorizontal="true">
-        <dc:Bounds x="190" y="100" width="890" height="170" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0071zwp_di" bpmnElement="Lane_0071zwp" isHorizontal="true">
         <dc:Bounds x="190" y="270" width="890" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0cs8enp_di" bpmnElement="Lane_0cs8enp" isHorizontal="true">
+        <dc:Bounds x="190" y="100" width="890" height="170" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="229" y="159" width="36" height="36" />

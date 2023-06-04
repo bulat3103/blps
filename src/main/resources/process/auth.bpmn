@@ -3,7 +3,7 @@
   <bpmn:collaboration id="Collaboration_1u790k6">
     <bpmn:participant id="Participant_0fz2ghc" name="Авторизация пользователя" processRef="Process_1f3rtj9" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1f3rtj9" isExecutable="true" camunda:historyTimeToLive="3000">
+  <bpmn:process id="Process_1f3rtj9" name="Auth" isExecutable="true" camunda:historyTimeToLive="3000">
     <bpmn:laneSet id="LaneSet_1dc2ddr">
       <bpmn:lane id="Lane_1bsb7h5">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>

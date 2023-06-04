@@ -3,7 +3,7 @@
   <bpmn:collaboration id="Collaboration_0jufod5">
     <bpmn:participant id="Participant_0s1e1iy" name="Удаление пользователя" processRef="Process_13vc22p" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_13vc22p" isExecutable="true" camunda:historyTimeToLive="3000">
+  <bpmn:process id="Process_13vc22p" name="DeleteUser" isExecutable="true" camunda:historyTimeToLive="3000">
     <bpmn:laneSet id="LaneSet_07l4w1n">
       <bpmn:lane id="Lane_0coegxp">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -24,7 +24,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Переход на главную страницу">
       <bpmn:outgoing>Flow_0nm2qky</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_0se40rf" name="Ввод данных для авторизации" camunda:formKey="camunda-forms:/forms/auth.form">
+    <bpmn:userTask id="Activity_0se40rf" name="Ввод данных для авторизации" camunda:formKey="camunda-forms:/forms/login.form">
       <bpmn:incoming>Flow_0nm2qky</bpmn:incoming>
       <bpmn:outgoing>Flow_12hwqx9</bpmn:outgoing>
     </bpmn:userTask>
@@ -77,11 +77,11 @@
         <dc:Bounds x="129" y="80" width="781" height="490" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0coegxp_di" bpmnElement="Lane_0coegxp" isHorizontal="true">
-        <dc:Bounds x="159" y="80" width="751" height="250" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_17s0fes_di" bpmnElement="Lane_17s0fes" isHorizontal="true">
         <dc:Bounds x="159" y="330" width="751" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0coegxp_di" bpmnElement="Lane_0coegxp" isHorizontal="true">
+        <dc:Bounds x="159" y="80" width="751" height="250" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="192" y="172" width="36" height="36" />
@@ -127,11 +127,11 @@
           <dc:Bounds x="804" y="215" width="73" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1w2rnlh_di" bpmnElement="Event_1w2rnlh">
-        <dc:Bounds x="332" y="452" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0nef3ay_di" bpmnElement="Event_0nef3ay">
         <dc:Bounds x="512" y="452" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1w2rnlh_di" bpmnElement="Event_1w2rnlh">
+        <dc:Bounds x="332" y="452" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0nm2qky_di" bpmnElement="Flow_0nm2qky">
         <di:waypoint x="228" y="190" />

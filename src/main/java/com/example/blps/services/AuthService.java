@@ -33,11 +33,6 @@ public class AuthService {
     }
 
     public User authUser(LoginRequestDTO loginRequestDTO) throws NoSuchUserException, AuthorizeException {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
-        if (!authentication.isAuthenticated()) {
-            throw new AuthorizeException("Ошибка авторизации");
-        }
         User user = userRepository.findUserByEmail(loginRequestDTO.getEmail());
         if (user == null) {
             throw new NoSuchUserException("Пользователя с таким логином не существует");

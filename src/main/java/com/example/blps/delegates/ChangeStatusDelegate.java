@@ -25,11 +25,12 @@ public class ChangeStatusDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        try {;
+        try {
             long statusId = (long) delegateExecution.getVariable("statusId");
             String status = (String) delegateExecution.getVariable("status");
             String message = (String) delegateExecution.getVariable("statusMessage");
             adminService.changeTestStatus(statusId, new ChangeStatusDTO(status, message));
+            logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "Status with id = " + statusId + " was successfully changed on " + status);
         } catch (Throwable throwable) {
             throw new BpmnError("change-status-error", throwable.getMessage());
