@@ -57,7 +57,7 @@ public class AdminService {
     @Transactional
     public void deleteTest(Long testId) throws NoSuchTestException {
         Optional<Test> testO = testRepository.findById(testId);
-        if (!testO.isPresent()) throw new NoSuchTestException("Теста с таким id не существует");
+        if (testO.isEmpty()) throw new NoSuchTestException("Теста с таким id не существует");
         Test test = testO.get();
         List<TestResult> testResultList = testResultRepository.findAllByTestId(test);
         List<Comment> commentList = commentRepository.getAllByTestId(test.getId());
@@ -74,7 +74,7 @@ public class AdminService {
             throw new InvalidDataException("Такого типа статуса не существует (WAITING, APPROVE, REJECT)");
         }
         Optional<TestStatus> testStatusOptional = testStatusRepository.findById(statusId);
-        if (!testStatusOptional.isPresent()) throw new InvalidDataException("Такой записи не существует");
+        if (testStatusOptional.isEmpty()) throw new InvalidDataException("Такой записи не существует");
         TestStatus testStatus = testStatusOptional.get();
         if (!testStatus.getStatus().equals("WAITING")) throw new InvalidDataException("Этот тест уже был принят/отклонен");
         CreateTestDTO createTestDTO = objectMapper.readValue(testStatus.getTestJson(), CreateTestDTO.class);

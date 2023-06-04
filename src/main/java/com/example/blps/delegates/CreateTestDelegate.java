@@ -3,6 +3,7 @@ package com.example.blps.delegates;
 import com.example.blps.model.dto.createTest.CreateQuestionDTO;
 import com.example.blps.model.dto.createTest.CreateTestDTO;
 import com.example.blps.model.dto.createTest.CreateTestResultDTO;
+import com.example.blps.security.JwtUtil;
 import com.example.blps.services.TestManagerService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,9 +23,11 @@ public class CreateTestDelegate implements JavaDelegate {
     private static final Logger logger = Logger.getLogger(CreateTestDelegate.class.getName());
 
     private final TestManagerService testManagerService;
+    private final JwtUtil jwtUtil;
 
-    public CreateTestDelegate(TestManagerService testManagerService) {
+    public CreateTestDelegate(TestManagerService testManagerService, JwtUtil jwtUtil) {
         this.testManagerService = testManagerService;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -36,7 +39,8 @@ public class CreateTestDelegate implements JavaDelegate {
             ObjectMapper mapper = new ObjectMapper();
             List<CreateQuestionDTO> createQuestionDTO = mapper.readValue(jsonQuestions, new TypeReference<>() {});
             List<CreateTestResultDTO> createTestResultDTO = mapper.readValue(jsonResults, new TypeReference<>() {});
-            testManagerService.createTest(new CreateTestDTO(
+            String username = jwtUtil.usernameFromToken((String) delegateExecution.getVariable("token"));
+            testManagerService.createTest(username, new CreateTestDTO(
                     name,
                     createQuestionDTO,
                     createTestResultDTO

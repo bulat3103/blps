@@ -28,11 +28,10 @@ public class TestManagerService {
     @Autowired
     private TestStatusRepository testStatusRepository;
 
-    public void createTest(CreateTestDTO createTestDTO) throws JsonProcessingException, InvalidDataException {
+    public void createTest(String username, CreateTestDTO createTestDTO) throws JsonProcessingException, InvalidDataException {
         for (CreateQuestionDTO questionDTO : createTestDTO.getQuestions()) validateQuestions(questionDTO);
         for (CreateTestResultDTO resultDTO : createTestDTO.getResults()) validateTestResult(resultDTO);
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findUserByEmail(userDetails.getUsername());
+        User user = userRepository.findUserByEmail(username);
         String json = objectMapper.writeValueAsString(createTestDTO);
         TestStatus testStatus = new TestStatus(user, Status.WAITING.name(), createTestDTO.getName(), json);
         testStatusRepository.save(testStatus);

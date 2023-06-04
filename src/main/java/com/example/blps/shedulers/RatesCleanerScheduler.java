@@ -4,14 +4,11 @@ import com.example.blps.model.Rate;
 import com.example.blps.model.Test;
 import com.example.blps.repositories.RateRepository;
 import com.example.blps.repositories.TestRepository;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@EnableScheduling
 @Service
 public class RatesCleanerScheduler {
     private final TestRepository testRepository;
@@ -22,7 +19,6 @@ public class RatesCleanerScheduler {
         this.rateRepository = rateRepository;
     }
 
-    @Scheduled(fixedRate = 120_000)
     @Transactional
     public void cleanRateAndUpdateTestRate() {
         List<Rate> allRates = rateRepository.findAll();
