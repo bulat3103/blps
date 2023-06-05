@@ -27,7 +27,7 @@ public class RateTestDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) {
         try {
-            long testId = (long) delegateExecution.getVariable("testId");
+            long testId = Long.parseLong((String) delegateExecution.getVariable("testId"));
             String rate = (String) delegateExecution.getVariable("rate");
             int rateInt = Integer.parseInt(rate);
             String username = jwtUtil.usernameFromToken((String) delegateExecution.getVariable("token"));

@@ -3,6 +3,7 @@ package com.example.blps.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.jaas.AbstractJaasAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Collections;
+import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
@@ -29,6 +31,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JavaMailSenderImpl javaMailSenderImpl () {
+        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        sender.setJavaMailProperties(props);
+        sender.setHost("smtp.gmail.com");
+        sender.setPort(587);
+        sender.setUsername("tpolabitmo@gmail.com");
+        sender.setPassword("sgyffsbvolewzwqr");
+        return sender;
     }
 
     @Override

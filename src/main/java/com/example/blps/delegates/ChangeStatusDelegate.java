@@ -27,7 +27,7 @@ public class ChangeStatusDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         try {
-            long statusId = (long) delegateExecution.getVariable("statusId");
+            long statusId = Long.parseLong((String) delegateExecution.getVariable("statusId"));
             String status = (String) delegateExecution.getVariable("status");
             String message = (String) delegateExecution.getVariable("statusMessage");
             MailCredentials mailCredentials = adminService.changeTestStatus(statusId, new ChangeStatusDTO(status, message));

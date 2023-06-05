@@ -39,8 +39,6 @@ public class AdminService {
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    private MessageSenderService messageSenderService;
-    @Autowired
     private TestStatusRepository testStatusRepository;
     @Autowired
     private ObjectMapper objectMapper;

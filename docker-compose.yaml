@@ -9,15 +9,3 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=quiz
     restart: unless-stopped
-  rabbitmq:
-    image: heidiks/rabbitmq-delayed-message-exchange
-    hostname: rabbitmq
-    restart: always
-    environment:
-      - RABBITMQ_DEFAULT_USER=blps
-      - RABBITMQ_DEFAULT_PASS=rabbitfuck
-    volumes:
-      - ./rabbitmq:/var/lib/rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672

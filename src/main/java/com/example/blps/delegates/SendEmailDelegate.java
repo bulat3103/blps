@@ -17,6 +17,8 @@ public class SendEmailDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         try {
+            logger.log(Level.INFO, "Message was sent to another process");
+            logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             delegateExecution
                     .getProcessEngineServices()
                     .getRuntimeService()
@@ -25,7 +27,6 @@ public class SendEmailDelegate implements JavaDelegate {
                     .setVariable("email-address", delegateExecution.getVariable("email-address"))
                     .setVariable("email-message", delegateExecution.getVariable("email-message"))
                     .correlate();
-            logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
         } catch (Throwable throwable) {
             throw new BpmnError("send-email-error", throwable.getMessage());
         }

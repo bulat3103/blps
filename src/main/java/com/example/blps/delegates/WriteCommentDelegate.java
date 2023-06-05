@@ -27,7 +27,7 @@ public class WriteCommentDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         try {
-            long testId = (long) delegateExecution.getVariable("testId");
+            long testId = Long.parseLong((String) delegateExecution.getVariable("testId"));
             String comment = (String) delegateExecution.getVariable("comment");
             String username = jwtUtil.usernameFromToken((String) delegateExecution.getVariable("token"));
             Long id = quizService.writeComment(testId, comment, username);

@@ -25,7 +25,7 @@
       <bpmn:incoming>Flow_1b51bvi</bpmn:incoming>
       <bpmn:outgoing>Flow_06a379d</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1os17lo" name="Авторизация" camunda:delegateExpression="#{loginDelegate}v">
+    <bpmn:serviceTask id="Activity_1os17lo" name="Авторизация" camunda:delegateExpression="#{adminLoginDelegate}">
       <bpmn:incoming>Flow_06a379d</bpmn:incoming>
       <bpmn:outgoing>Flow_0mip3qy</bpmn:outgoing>
     </bpmn:serviceTask>
