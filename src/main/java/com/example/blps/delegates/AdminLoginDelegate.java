@@ -38,6 +38,7 @@ public class AdminLoginDelegate implements JavaDelegate {
             if (!user.getRole().getName().equals(RoleName.ADMIN)) throw new AuthorizeException("У вас нет прав");
             logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "User with email " + user.getEmail() + " is successfully signed in");
+            logger.log(Level.INFO, "Generated token is " + token);
         } catch (Throwable throwable) {
             throw new BpmnError("login_error", throwable.getMessage());
         }

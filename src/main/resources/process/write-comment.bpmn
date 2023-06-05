@@ -29,7 +29,7 @@
     <bpmn:sequenceFlow id="Flow_0u6k3my" sourceRef="Activity_1mvvn29" targetRef="Activity_04736k8" />
     <bpmn:serviceTask id="Activity_1rlyp7t" name="Валидация данных, сохранение комментария" camunda:delegateExpression="#{writeCommentDelegate}">
       <bpmn:incoming>Flow_0m4zk74</bpmn:incoming>
-      <bpmn:outgoing>Flow_0mws9hd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0iso68u</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0m4zk74" sourceRef="Activity_04736k8" targetRef="Activity_1rlyp7t" />
     <bpmn:boundaryEvent id="Event_1wsu0kd" attachedToRef="Activity_1rlyp7t">
@@ -40,10 +40,15 @@
       <bpmn:incoming>Flow_0o0bt6c</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0o0bt6c" sourceRef="Event_1wsu0kd" targetRef="Event_10bg3nt" />
-    <bpmn:sequenceFlow id="Flow_0mws9hd" sourceRef="Activity_1rlyp7t" targetRef="Event_0uzt8iy" />
     <bpmn:endEvent id="Event_0uzt8iy" name="Комментарий создан">
-      <bpmn:incoming>Flow_0mws9hd</bpmn:incoming>
+      <bpmn:incoming>Flow_1cyfvk8</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0ikaii8" name="Получить результат выполнения">
+      <bpmn:incoming>Flow_0iso68u</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cyfvk8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0iso68u" sourceRef="Activity_1rlyp7t" targetRef="Activity_0ikaii8" />
+    <bpmn:sequenceFlow id="Flow_1cyfvk8" sourceRef="Activity_0ikaii8" targetRef="Event_0uzt8iy" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_03gxsxp">
@@ -87,6 +92,10 @@
           <dc:Bounds x="1055" y="202" width="70" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ikaii8_di" bpmnElement="Activity_0ikaii8">
+        <dc:Bounds x="920" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1wsu0kd_di" bpmnElement="Event_1wsu0kd">
         <dc:Bounds x="802" y="119" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -119,8 +128,12 @@
         <di:waypoint x="820" y="80" />
         <di:waypoint x="862" y="80" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0mws9hd_di" bpmnElement="Flow_0mws9hd">
+      <bpmndi:BPMNEdge id="Flow_0iso68u_di" bpmnElement="Flow_0iso68u">
         <di:waypoint x="850" y="177" />
+        <di:waypoint x="920" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cyfvk8_di" bpmnElement="Flow_1cyfvk8">
+        <di:waypoint x="1020" y="177" />
         <di:waypoint x="1072" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

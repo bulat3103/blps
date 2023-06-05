@@ -10,6 +10,7 @@
         <bpmn:flowNodeRef>Activity_0se40rf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0ca04hs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ayrvoj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1w6yncs</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_17s0fes">
         <bpmn:flowNodeRef>Activity_1v9wpi0</bpmn:flowNodeRef>
@@ -40,13 +41,13 @@
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_1kslipq" name="Удаление пользователя" camunda:delegateExpression="#{deleteUserDelegate}">
       <bpmn:incoming>Flow_15x1mol</bpmn:incoming>
-      <bpmn:outgoing>Flow_1im562s</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0k812kb</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0xgq6ej" name="Данные не валидны">
       <bpmn:incoming>Flow_035f6n0</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:endEvent id="Event_1ayrvoj" name="Пользователь удален">
-      <bpmn:incoming>Flow_1im562s</bpmn:incoming>
+      <bpmn:incoming>Flow_06qy1jv</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:boundaryEvent id="Event_1w2rnlh" attachedToRef="Activity_1v9wpi0">
       <bpmn:outgoing>Flow_12oevdn</bpmn:outgoing>
@@ -61,8 +62,13 @@
     <bpmn:sequenceFlow id="Flow_1ywuc5p" sourceRef="Activity_1v9wpi0" targetRef="Activity_0ca04hs" />
     <bpmn:sequenceFlow id="Flow_12oevdn" sourceRef="Event_1w2rnlh" targetRef="Event_03regwx" />
     <bpmn:sequenceFlow id="Flow_15x1mol" sourceRef="Activity_0ca04hs" targetRef="Activity_1kslipq" />
-    <bpmn:sequenceFlow id="Flow_1im562s" sourceRef="Activity_1kslipq" targetRef="Event_1ayrvoj" />
     <bpmn:sequenceFlow id="Flow_035f6n0" sourceRef="Event_0nef3ay" targetRef="Event_0xgq6ej" />
+    <bpmn:userTask id="Activity_1w6yncs" name="Получить результат выполнения">
+      <bpmn:incoming>Flow_0k812kb</bpmn:incoming>
+      <bpmn:outgoing>Flow_06qy1jv</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_06qy1jv" sourceRef="Activity_1w6yncs" targetRef="Event_1ayrvoj" />
+    <bpmn:sequenceFlow id="Flow_0k812kb" sourceRef="Activity_1kslipq" targetRef="Activity_1w6yncs" />
   </bpmn:process>
   <bpmn:error id="Error_072utyr" name="Error_3m96tti" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -117,6 +123,10 @@
           <dc:Bounds x="804" y="215" width="73" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1w6yncs_di" bpmnElement="Activity_1w6yncs">
+        <dc:Bounds x="660" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0nef3ay_di" bpmnElement="Event_0nef3ay">
         <dc:Bounds x="512" y="452" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -146,16 +156,20 @@
         <di:waypoint x="510" y="230" />
         <di:waypoint x="510" y="390" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1im562s_di" bpmnElement="Flow_1im562s">
-        <di:waypoint x="560" y="430" />
-        <di:waypoint x="691" y="430" />
-        <di:waypoint x="691" y="190" />
-        <di:waypoint x="822" y="190" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_035f6n0_di" bpmnElement="Flow_035f6n0">
         <di:waypoint x="530" y="488" />
         <di:waypoint x="530" y="510" />
         <di:waypoint x="572" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06qy1jv_di" bpmnElement="Flow_06qy1jv">
+        <di:waypoint x="760" y="190" />
+        <di:waypoint x="822" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k812kb_di" bpmnElement="Flow_0k812kb">
+        <di:waypoint x="560" y="430" />
+        <di:waypoint x="610" y="430" />
+        <di:waypoint x="610" y="190" />
+        <di:waypoint x="660" y="190" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

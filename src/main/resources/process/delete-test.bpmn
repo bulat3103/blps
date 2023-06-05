@@ -16,9 +16,10 @@
         <bpmn:flowNodeRef>Activity_0qhqr79</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_00tiw71</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0siaj2l</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0v8wyf9</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:sequenceFlow id="Flow_03rgo44" sourceRef="Activity_02li9d8" targetRef="Event_0siaj2l" />
+    <bpmn:sequenceFlow id="Flow_03rgo44" sourceRef="Activity_02li9d8" targetRef="Activity_0v8wyf9" />
     <bpmn:sequenceFlow id="Flow_06qub2i" sourceRef="Activity_00tiw71" targetRef="Activity_02li9d8" />
     <bpmn:sequenceFlow id="Flow_17c0rbr" sourceRef="Event_1cftydv" targetRef="Event_1k933u6" />
     <bpmn:sequenceFlow id="Flow_0en5bbt" sourceRef="Activity_1d3cvt8" targetRef="Activity_00tiw71" />
@@ -40,7 +41,7 @@
       <bpmn:sequenceFlow id="Flow_1nsywzd" sourceRef="Event_1hr4fme" targetRef="Activity_1g04zzk" />
     </bpmn:transaction>
     <bpmn:endEvent id="Event_0siaj2l" name="Тест удален">
-      <bpmn:incoming>Flow_03rgo44</bpmn:incoming>
+      <bpmn:incoming>Flow_1hoac0e</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:userTask id="Activity_00tiw71" name="Ввод данных для создания теста" camunda:formKey="camunda-forms:/forms/delete-test.form">
       <bpmn:incoming>Flow_0en5bbt</bpmn:incoming>
@@ -60,6 +61,11 @@
     <bpmn:startEvent id="StartEvent_1" name="Переход на главную страницу">
       <bpmn:outgoing>Flow_0cg2iip</bpmn:outgoing>
     </bpmn:startEvent>
+    <bpmn:userTask id="Activity_0v8wyf9" name="Получить результат выполнения">
+      <bpmn:incoming>Flow_03rgo44</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hoac0e</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1hoac0e" sourceRef="Activity_0v8wyf9" targetRef="Event_0siaj2l" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_17gh3ez">
@@ -72,6 +78,10 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0pmrqga_di" bpmnElement="Lane_0pmrqga" isHorizontal="true">
         <dc:Bounds x="159" y="280" width="1061" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0v8wyf9_di" bpmnElement="Activity_0v8wyf9">
+        <dc:Bounds x="981" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_02li9d8_di" bpmnElement="Activity_02li9d8" isExpanded="true">
         <dc:Bounds x="640" y="290" width="280" height="160" />
@@ -126,8 +136,7 @@
       <bpmndi:BPMNEdge id="Flow_03rgo44_di" bpmnElement="Flow_03rgo44">
         <di:waypoint x="920" y="370" />
         <di:waypoint x="1031" y="370" />
-        <di:waypoint x="1031" y="190" />
-        <di:waypoint x="1142" y="190" />
+        <di:waypoint x="1031" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06qub2i_di" bpmnElement="Flow_06qub2i">
         <di:waypoint x="560" y="190" />
@@ -153,6 +162,10 @@
       <bpmndi:BPMNEdge id="Flow_0cg2iip_di" bpmnElement="Flow_0cg2iip">
         <di:waypoint x="228" y="190" />
         <di:waypoint x="280" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hoac0e_di" bpmnElement="Flow_1hoac0e">
+        <di:waypoint x="1081" y="190" />
+        <di:waypoint x="1142" y="190" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

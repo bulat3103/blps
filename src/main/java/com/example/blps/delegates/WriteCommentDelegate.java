@@ -31,6 +31,7 @@ public class WriteCommentDelegate implements JavaDelegate {
             String comment = (String) delegateExecution.getVariable("comment");
             String username = jwtUtil.usernameFromToken((String) delegateExecution.getVariable("token"));
             Long id = quizService.writeComment(testId, comment, username);
+            delegateExecution.setVariable("commentId", id);
             logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "Comment with id=" + id + " for the test " + testId + " was successfully created");
         } catch (Throwable throwable) {

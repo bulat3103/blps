@@ -25,6 +25,7 @@ public class DeleteUserDelegate implements JavaDelegate {
         try {
             long deleteUserId = Long.parseLong((String) delegateExecution.getVariable("userId"));
             adminService.deletePerson(deleteUserId);
+            delegateExecution.setVariable("result", "User with id=" + deleteUserId + " is successfully deleted");
             logger.log(Level.INFO, "Current activity is " + delegateExecution.getCurrentActivityName());
             logger.log(Level.INFO, "User with id=" + deleteUserId + " is successfully deleted");
         } catch (Throwable throwable) {
